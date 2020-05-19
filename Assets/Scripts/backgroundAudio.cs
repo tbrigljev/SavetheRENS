@@ -8,7 +8,7 @@ public class backgroundAudio : MonoBehaviour
 	
   void Start()
   {
-		endIntro = 111f;
+		endIntro = 107f;
     StartCoroutine(AudioLoop(endIntro));
   }
 	

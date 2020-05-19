@@ -123,7 +123,6 @@ public class discardMissions : MonoBehaviour
 			if (boxReady == null)
 			{
 				boxReady = Instantiate(boxCooldownPrefab, transform.position, transform.rotation);
-				Debug.Log("Should enter only once");
 			}
 			
 			if (time > 0f)

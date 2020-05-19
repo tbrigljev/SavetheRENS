@@ -741,7 +741,7 @@ GameObject:
   - component: {fileID: 300882223}
   - component: {fileID: 300882222}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: MissionReadyParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -754,12 +754,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300882220}
-  m_LocalRotation: {x: -0.65089524, y: 0.27628863, z: -0.27628863, w: 0.65089524}
-  m_LocalPosition: {x: -8.5, y: 4, z: -0.8}
+  m_LocalRotation: {x: -0.26488686, y: -0.26488686, z: -0.655618, w: 0.655618}
+  m_LocalPosition: {x: 0, y: 1, z: 0.50000006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1330113205}
-  m_RootOrder: 4
+  m_Father: {fileID: 718668469}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -136, y: -90, z: 90}
 --- !u!199 &300882222
 ParticleSystemRenderer:
@@ -779,7 +779,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e999ed0a1e60c93488e070711bca6dd8, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -803,7 +803,7 @@ ParticleSystemRenderer:
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
-  m_MaxParticleSize: 0.5
+  m_MaxParticleSize: 0.1
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
@@ -831,7 +831,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300882220}
   serializedVersion: 6
-  lengthInSec: 10
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -839,7 +839,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -1075,7 +1075,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.7
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2151,7 +2151,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
-    enabled: 0
+    enabled: 1
     mode: 0
     timeMode: 0
     fps: 30
@@ -2263,8 +2263,8 @@ ParticleSystem:
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
     tilesX: 1
-    tilesY: 1
-    animationType: 0
+    tilesY: 17
+    animationType: 1
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
@@ -5614,7 +5614,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1330113205}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &347838176
 GameObject:
@@ -5675,6 +5675,7 @@ MonoBehaviour:
   boxCooldownPrefab: {fileID: 4574063083498984253, guid: 7e37082169a12d746b3de2b43e655a34,
     type: 3}
   maxTime: 0
+  cooldown: 0
   missionDiscardProgress: {fileID: 1277099279}
 --- !u!1 &380421652
 GameObject:
@@ -6467,7 +6468,7 @@ Transform:
   - {fileID: 1483941755}
   - {fileID: 1151527458}
   m_Father: {fileID: 1330113205}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &620847680
 GameObject:
@@ -6901,11 +6902,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4c2e426e783e81e43b56e0e856823069, type: 3}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: 039fd6d78e5cce24985b6e0c5e2fc412, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 0.2
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -7008,12 +7009,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 715694356}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2f87734724dcae4cb5bdc73597ea7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endIntro: 0
+  endIntro: 107
 --- !u!1 &717588835
 GameObject:
   m_ObjectHideFlags: 0
@@ -7111,6 +7112,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2018644732}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &718668469 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 464255877974042156, guid: 8ca663ac3e10d654a80d39c73937fa82,
+    type: 3}
+  m_PrefabInstance: {fileID: 2018644732}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &718668470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7127,11 +7134,13 @@ MonoBehaviour:
   - {fileID: 8604442708708393463, guid: c5e8dfb950ea0ea42b1504dbca18629b, type: 3}
   - {fileID: 8930316168523302697, guid: 2aaa18b6405332242819866426d85b0a, type: 3}
   - {fileID: 1301497226345627995, guid: 73c49cd6ca1dd5e49b9dbaf388aeb814, type: 3}
-  minTime: 0
-  maxTime: 2
+  minTime: 5
+  maxTime: 10
   missionCount: 0
-  startTime: 1
   missionMax: 3
+  allMissions: 0
+  speed: 10
+  amount: 0.01
   missionCountText: {fileID: 1569425052}
 --- !u!1001 &740631848
 PrefabInstance:
@@ -7976,7 +7985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 09a52bc4df57b6c40a049798a9244549, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 09a52bc4df57b6c40a049798a9244549, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8959,7 +8968,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1330113205}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1253802395
 GameObject:
@@ -9101,7 +9110,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 435.3, y: 0.7000122}
-  m_SizeDelta: {x: 200, y: 30}
+  m_SizeDelta: {x: 400, y: 30}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1277099279
 MonoBehaviour:
@@ -9331,7 +9340,6 @@ Transform:
   - {fileID: 804820434}
   - {fileID: 910436948}
   - {fileID: 101365555}
-  - {fileID: 300882221}
   - {fileID: 333428042}
   - {fileID: 1212965878}
   - {fileID: 591940046}
@@ -9976,7 +9984,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 38.700012, y: 0.7000122}
-  m_SizeDelta: {x: 200, y: 30}
+  m_SizeDelta: {x: 400, y: 30}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1569425052
 MonoBehaviour:
