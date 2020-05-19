@@ -16,7 +16,7 @@ public class cameraControls : MonoBehaviour
       offset = transform.position - player.transform.position;
 			limitRight = 1.5f;
 			limitLeft = -9.6f;
-			limitZ = transform.position.z;
+			limitZ = 4.5f;
     }
 
  
