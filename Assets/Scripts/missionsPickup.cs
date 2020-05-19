@@ -19,13 +19,19 @@ public class missionsPickup : MonoBehaviour
 	private bool carrying;
 	
 	public float range;	
-	public float thrust;
+	public float thrust;	
+	
+	private string globalName;
+	private string localName;
 		
   void Start()
   {
     GetComponent<Rigidbody>().useGravity = true;
 		range = 1.2f;
-		thrust = 2f;
+		thrust = 2f;	
+		
+		globalName = gameObject.name;
+		localName = "currentMission";
   }
 	
 	GameObject findClosestPlayer()
@@ -86,6 +92,8 @@ public class missionsPickup : MonoBehaviour
 		GetComponent<Rigidbody>().useGravity = false;
 		GetComponent<Rigidbody>().isKinematic = true;
 		GetComponent<Collider>().enabled = false;
+		
+		gameObject.name = localName;
 
 		transform.SetParent(player.transform);
 		transform.localRotation = Quaternion.identity;
@@ -95,6 +103,8 @@ public class missionsPickup : MonoBehaviour
 	{
 		transform.SetParent(null);
 		
+		gameObject.name = globalName;
+		
 		GetComponent<Rigidbody>().useGravity = true;
 		GetComponent<Rigidbody>().isKinematic = false;
 		GetComponent<Collider>().enabled = true;
@@ -103,6 +113,8 @@ public class missionsPickup : MonoBehaviour
 	void yeet()
 	{
 		transform.SetParent(null);
+		
+		gameObject.name = globalName;
 		
 		GetComponent<Rigidbody>().useGravity = true;
 		GetComponent<Rigidbody>().isKinematic = false;

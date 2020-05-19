@@ -10,6 +10,7 @@ public class missionSpawner : MonoBehaviour
 	
 	private float spawnTime;
 	
+	private float time;
 	public float minTime;
 	public float maxTime;
 	private float rayLength;
@@ -25,35 +26,30 @@ public class missionSpawner : MonoBehaviour
   void Start()
   {
 		missionCount = 0;
-		StartCoroutine(Spawner());
 		rayLength = 3f;
+		time = 0f;
   }
 
   void Update()
   {
     spawnTime = Random.Range(minTime, maxTime);
 		
-		Vector3 offset  = new Vector3(0, 2, 0);
-    Debug.DrawRay(transform.position, transform.forward*rayLength, Color.blue);
-  }
-	
-	IEnumerator Spawner()
-	{
-		yield return new WaitForSeconds(startTime);
-		while(true)
+		time += Time.deltaTime;
+		if (time > spawnTime)
 		{
 			if (missionCount < missionMax)
 			{
-				missionType = Random.Range(0,3);
+				missionType = Random.Range(0, missions.Length);				
 				missionCount = missionCount + 1;
 				missionCountText.text = "Missions: " + missionCount.ToString();
-				
 				Vector3 spawnPosition = transform.position + transform.forward*2*missionCount;
-				//Debug.Log(spawnPosition);
-				mission = Instantiate(missions[missionType], spawnPosition, gameObject.transform.rotation);
+				mission = Instantiate(missions[missionType], spawnPosition, gameObject.transform.rotation);				
 				mission.name = "missionReady" + missionCount.ToString();
-				yield return new WaitForSeconds(spawnTime);
 			}
+			time = 0f;
 		}
-	}	
+		
+		Vector3 offset  = new Vector3(0, 2, 0);
+    Debug.DrawRay(transform.position, transform.forward*rayLength, Color.blue);
+  }
 }

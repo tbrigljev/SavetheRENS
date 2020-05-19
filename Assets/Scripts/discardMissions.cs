@@ -24,7 +24,7 @@ public class discardMissions : MonoBehaviour
 	public float maxTime;
 	
 	private bool readyForMission;
-	private bool cooldown;
+	public bool cooldown;
 	
 	public Text missionDiscardProgress;
 	
@@ -98,12 +98,7 @@ public class discardMissions : MonoBehaviour
 		{
 			if (boxReady == null)
 			{
-				boxReady = Instantiate(boxReadyPrefab, transform.position, Quaternion.identity);
-			}
-			else if (boxReady != null)
-			{
-				boxReady.transform.position = transform.position;
-				boxReady.transform.rotation = transform.rotation;
+				boxReady = Instantiate(boxReadyPrefab, transform.position, transform.rotation);
 			}
 			
 			if (Input.GetKey(KeyCode.R))
@@ -115,30 +110,42 @@ public class discardMissions : MonoBehaviour
 				}
 				else if (time > maxTime)
 				{
+					Destroy(player.transform.Find("currentMission").gameObject);					
 					stationMessage = "Discard completed!";
 					missions.GetComponent<missionSpawner>().missionCount -= 1;
 					cooldown = true;
+					Destroy(boxReady);
 				}
 			}
 		}
 		else if (cooldown)
 		{
-			Destroy(boxReady);
-			boxReady = Instantiate(boxCooldownPrefab, transform.position, Quaternion.identity);
+			if (boxReady == null)
+			{
+				boxReady = Instantiate(boxCooldownPrefab, transform.position, transform.rotation);
+				Debug.Log("Should enter only once");
+			}
+			
 			if (time > 0f)
 			{
 				stationMessage = "Station in cooldown: " + Mathf.Round(Mathf.Round(time/maxTime*100)/10)*10 + "%";
-				time -= Time.deltaTime*2;
+				time -= Time.deltaTime;
 			}
 			else
 			{
+				Destroy(boxReady);
 				stationMessage = "Station ready!";
 				cooldown = false;
 			}
 		}
 		else if ((!readyForMission) && (!cooldown))
 		{
-			Destroy(boxReady);
+			if (boxReady != null)
+			{
+				time = 0f;
+				Destroy(boxReady);
+				stationMessage = "Station ready!";
+			}
 		}
     Debug.DrawRay(transform.position + offset, transform.forward*rayLength, Color.blue);
 	}
