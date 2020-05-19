@@ -7,14 +7,19 @@ public class avatarControls : MonoBehaviour
 	private Rigidbody rb;
 	
 	public float speed;
+	public float maxTime;
 	public float turnrate;
-	private float rayLength;
+	
 	private float minX;
 	private float maxX;
 	private float minZ;
 	private float maxZ;
+	private float time;
 	private float minMiddle;
-	private float maxMiddle;
+	private float maxMiddle;	
+	private float rayLength;
+	
+	public AudioSource[] footstepsSounds;
 	
 	public bool carrying;
 	
@@ -23,6 +28,8 @@ public class avatarControls : MonoBehaviour
       speed = 10f;
 			rayLength = 3f;
 			turnrate = 0.15f;
+			maxTime = 0.6f;
+			time = 0f;
 			
 			carrying = false;
 			
@@ -73,6 +80,13 @@ public class avatarControls : MonoBehaviour
 			newPosition.z = (newPosition.z < minZ) ? minZ : newPosition.z;
 			newPosition.y = 0;
 			
+			time += Time.deltaTime;
+			if (time > maxTime)
+			{
+				time = 0f;
+				footsteps();
+			}
+			
 			rb.MovePosition(newPosition);
     }
 		
@@ -83,5 +97,12 @@ public class avatarControls : MonoBehaviour
       Debug.DrawRay(transform.position+eyesLevel, transform.forward*rayLength, Color.red);
 			Debug.DrawRay(transform.position+hipLevel,  transform.forward*rayLength, Color.green);
 			Debug.DrawRay(transform.position,           transform.forward*rayLength, Color.blue);
+		}		
+		
+		void footsteps()
+		{
+			var nextClip = footstepsSounds[Random.Range(0, footstepsSounds.Length)];
+			//GetComponent<AudioSource>().clip = nextClip;
+			//GetComponent<AudioSource>().Play();
 		}
 }
