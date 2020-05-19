@@ -9,13 +9,24 @@ public class avatarControls : MonoBehaviour
 	public float speed;
 	public float turnrate;
 	private float rayLength;
+	private float minX;
+	private float maxX;
+	private float minZ;
+	private float maxZ;
+	private float minMiddle;
+	private float maxMiddle;
+	
+	public bool carrying;
 	
     void Start()
     {
-      rb = GetComponent<Rigidbody>();
-			speed = 10f;
-			turnrate = 0.15f;
+      speed = 10f;
 			rayLength = 3f;
+			turnrate = 0.15f;
+			
+			carrying = false;
+			
+			rb = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
@@ -33,10 +44,33 @@ public class avatarControls : MonoBehaviour
 				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(looking), turnrate);
 			}
 			
-			newPosition.x = (newPosition.x > 9)     ? 9     : newPosition.x;
-			newPosition.x = (newPosition.x < -14)   ? -14   : newPosition.x;
-			newPosition.z = (newPosition.z > -0.7f) ? -0.7f : newPosition.z;
-			newPosition.z = (newPosition.z < -9)    ? -9    : newPosition.z;
+			if (!carrying)
+			{
+				minX = -15f;
+				maxX = 6f;
+				minZ = -9;
+				maxZ = -0.8f;				
+				minMiddle = -10f;
+				maxMiddle = -8f;
+			}
+			else
+			{			
+				minX = -14.8f;
+				maxX = 5.8f;
+				minZ = -8.8f;				
+				minMiddle = -10.2f;
+				maxMiddle = -7.8f;
+			}
+			
+			if ((newPosition.z < -4f) && ((newPosition.x < maxMiddle) && (newPosition.x > minMiddle)))
+			{
+				newPosition.x = (newPosition.x > -8.85f) ? maxMiddle : minMiddle;
+			}
+			
+			newPosition.x = (newPosition.x > maxX) ? maxX : newPosition.x;
+			newPosition.x = (newPosition.x < minX) ? minX : newPosition.x;
+			newPosition.z = (newPosition.z > maxZ) ? maxZ : newPosition.z;
+			newPosition.z = (newPosition.z < minZ) ? minZ : newPosition.z;
 			newPosition.y = 0;
 			
 			rb.MovePosition(newPosition);
