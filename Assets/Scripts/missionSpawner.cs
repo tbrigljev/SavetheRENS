@@ -51,11 +51,11 @@ public class missionSpawner : MonoBehaviour
 		}
 		else if (allMissions >= 4)
 		{
-			spawnerMessage = "No new missions!";
+			spawnerMessage = "No more missions!";
 		}
 		else
 		{
-			spawnerMessage = "No more missions!";			
+			spawnerMessage = "Waiting on new missions!";			
 		}
 		
     spawnTime = Random.Range(minTime, maxTime);

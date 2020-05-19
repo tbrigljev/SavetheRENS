@@ -1,0 +1,201 @@
+fileFormatVersion: 2
+guid: b8ac6c7e7b5a0c442a68612ac4adbdbe
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Camera
+    100002: casier_Corps principal
+    100004: casier_drawer_01
+    100006: casier_drawer_02
+    100008: casier_drawer_03
+    100010: casier_drawer_04
+    100012: casier_drawer_05
+    100014: casier_handle_01
+    100016: casier_handle_02
+    100018: casier_handle_03
+    100020: casier_handle_04
+    100022: casier_handle_05
+    100024: casier_page_0
+    100026: casier_page_1
+    100028: casier_page_2
+    100030: casier_page_3
+    100032: casier_page_4
+    100034: casier_page_5
+    100036: //RootNode
+    100038: Light
+    400000: Camera
+    400002: casier_Corps principal
+    400004: casier_drawer_01
+    400006: casier_drawer_02
+    400008: casier_drawer_03
+    400010: casier_drawer_04
+    400012: casier_drawer_05
+    400014: casier_handle_01
+    400016: casier_handle_02
+    400018: casier_handle_03
+    400020: casier_handle_04
+    400022: casier_handle_05
+    400024: casier_page_0
+    400026: casier_page_1
+    400028: casier_page_2
+    400030: casier_page_3
+    400032: casier_page_4
+    400034: casier_page_5
+    400036: //RootNode
+    400038: Light
+    2000000: Camera
+    2100000: Default OBJ
+    2100002: Default OBJ.002
+    2100004: Default OBJ.003
+    2100006: Default OBJ.005
+    2100008: Default OBJ.006
+    2100010: Default OBJ.022
+    2100012: Default OBJ.023
+    2100014: Default OBJ.020
+    2100016: Default OBJ.019
+    2100018: Default OBJ.018
+    2100020: Default OBJ.017
+    2100022: Default OBJ.016
+    2100024: Default OBJ.021
+    2100026: Default OBJ.025
+    2100028: Default OBJ.027
+    2100030: Default OBJ.029
+    2100032: Default OBJ.030
+    2300000: casier_Corps principal
+    2300002: casier_drawer_01
+    2300004: casier_drawer_02
+    2300006: casier_drawer_03
+    2300008: casier_drawer_04
+    2300010: casier_drawer_05
+    2300012: casier_handle_01
+    2300014: casier_handle_02
+    2300016: casier_handle_03
+    2300018: casier_handle_04
+    2300020: casier_handle_05
+    2300022: casier_page_0
+    2300024: casier_page_1
+    2300026: casier_page_2
+    2300028: casier_page_3
+    2300030: casier_page_4
+    2300032: casier_page_5
+    3300000: casier_Corps principal
+    3300002: casier_drawer_01
+    3300004: casier_drawer_02
+    3300006: casier_drawer_03
+    3300008: casier_drawer_04
+    3300010: casier_drawer_05
+    3300012: casier_handle_01
+    3300014: casier_handle_02
+    3300016: casier_handle_03
+    3300018: casier_handle_04
+    3300020: casier_handle_05
+    3300022: casier_page_0
+    3300024: casier_page_1
+    3300026: casier_page_2
+    3300028: casier_page_3
+    3300030: casier_page_4
+    3300032: casier_page_5
+    4300000: casier_Corps principal
+    4300002: casier_drawer_03
+    4300004: casier_drawer_01
+    4300006: casier_handle_01
+    4300008: casier_handle_03
+    4300010: casier_drawer_05
+    4300012: casier_drawer_04
+    4300014: casier_page_0
+    4300016: casier_page_1
+    4300018: casier_page_2
+    4300020: casier_page_3
+    4300022: casier_page_4
+    4300024: casier_page_5
+    4300026: casier_drawer_02
+    4300028: casier_handle_04
+    4300030: casier_handle_02
+    4300032: casier_handle_05
+    10800000: Light
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

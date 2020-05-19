@@ -99,6 +99,10 @@ public class avatarControls : MonoBehaviour
 			{
 				rb.MovePosition(newPosition);
 			}
+			else
+			{
+				rb.velocity = Vector3.zero;
+			}
 		}
 		
 	void Update()

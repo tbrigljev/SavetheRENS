@@ -24,6 +24,7 @@ public class movableToolWall : MonoBehaviour
 	private float distancePlayers;
 	private float rayLengthForward;
 	private float rayLengthBackward;
+	private float playersDetection;
 	private float currentDistanceToPlayers;
 	private float currentDistanceToClosestPlayer;
 	
@@ -45,6 +46,7 @@ public class movableToolWall : MonoBehaviour
 		//maxTimer = 1f;
 		rayLengthForward = 3f;
 		rayLengthBackward = 0.5f;
+		playersDetection = 1000f;
 		
 		player = null;
 		allowed = false;
@@ -58,7 +60,7 @@ public class movableToolWall : MonoBehaviour
 	GameObject findClosestPlayer()
 	{
 		players = GameObject.FindGameObjectsWithTag("Player");		
-    currentDistanceToPlayers = 200f;
+    currentDistanceToPlayers = playersDetection;
 		
     foreach (GameObject player in players)
      {
@@ -110,7 +112,8 @@ public class movableToolWall : MonoBehaviour
 		Debug.DrawRay(transform.position,  transform.forward*rayLengthForward,  Color.blue);
 		Debug.DrawRay(transform.position, -transform.forward*rayLengthBackward, Color.red);
 		
-		player = findClosestPlayer();
+		player = findClosestPlayer();		
+		player.GetComponent<avatarControls>().carrying = carrying;
 		
 		/*time += Time.deltaTime;
 		if (time > maxTimer)
@@ -138,7 +141,6 @@ public class movableToolWall : MonoBehaviour
 		}
 		else if (carrying)
 		{
-			player.GetComponent<avatarControls>().carrying = carrying;
 			transform.position = player.transform.position + player.transform.TransformDirection(new Vector3(0, 3, distance));;
 			trot = player.transform.eulerAngles;
 			trot.y += 180;
@@ -152,7 +154,6 @@ public class movableToolWall : MonoBehaviour
 				{
 					drop();
 					carrying = false;
-					player.GetComponent<avatarControls>().carrying = carrying;
 					col.isTrigger = false;				
 					Physics.IgnoreCollision(col, player.GetComponent<Collider>(), false);
 				}
