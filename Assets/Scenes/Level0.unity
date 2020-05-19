@@ -6876,7 +6876,7 @@ AudioSource:
   m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
-  Mute: 1
+  Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -10003,8 +10003,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -10725,9 +10725,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 294265842647173965, guid: 5ceddb927708a024fb6669a619f065d4,
         type: 3}
+      propertyPath: footstepsSounds.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 294265842647173965, guid: 5ceddb927708a024fb6669a619f065d4,
+        type: 3}
       propertyPath: speed
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 294265842647173965, guid: 5ceddb927708a024fb6669a619f065d4,
+        type: 3}
+      propertyPath: footsteps
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 294265842647173965, guid: 5ceddb927708a024fb6669a619f065d4,
+        type: 3}
+      propertyPath: footstepsound
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 294265842647173965, guid: 5ceddb927708a024fb6669a619f065d4,
+        type: 3}
+      propertyPath: footstepsSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: a07f03f2e575217419c727829d08f99d, type: 3}
+    - target: {fileID: 294265842647173965, guid: 5ceddb927708a024fb6669a619f065d4,
+        type: 3}
+      propertyPath: footstepsSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: d3ecf264f1bd76542a3c4b4a075bec48, type: 3}
+    - target: {fileID: 294265842647173965, guid: 5ceddb927708a024fb6669a619f065d4,
+        type: 3}
+      propertyPath: footstepsSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 58ee67471fba17e438f2366ff086d357, type: 3}
+    - target: {fileID: 294265842647173965, guid: 5ceddb927708a024fb6669a619f065d4,
+        type: 3}
+      propertyPath: footstepsSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9f933afa9f45b7b42a89d303b9bb709c, type: 3}
+    - target: {fileID: 294265842647173965, guid: 5ceddb927708a024fb6669a619f065d4,
+        type: 3}
+      propertyPath: footstepsSounds.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 828fc556277341542a62912203c046ea, type: 3}
+    - target: {fileID: 294265842647173965, guid: 5ceddb927708a024fb6669a619f065d4,
+        type: 3}
+      propertyPath: footstepsSounds.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8548679ab6e10a9489ac10ccd6e87b75, type: 3}
     - target: {fileID: 294265844215621026, guid: 5ceddb927708a024fb6669a619f065d4,
         type: 3}
       propertyPath: m_LocalPosition.x

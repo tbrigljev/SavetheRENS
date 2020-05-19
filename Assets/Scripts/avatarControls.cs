@@ -7,26 +7,37 @@ public class avatarControls : MonoBehaviour
 	private Rigidbody rb;
 	
 	public float speed;
+	public float maxTime;
 	public float turnrate;
-	private float rayLength;
+	
 	private float minX;
 	private float maxX;
 	private float minZ;
 	private float maxZ;
+	private float time;
 	private float minMiddle;
-	private float maxMiddle;
+	private float maxMiddle;	
+	private float rayLength;
+	
+	public AudioSource footsteps;
+	public AudioClip[] footstepsSounds;
+	public AudioClip footstepsound;
 	
 	public bool carrying;
 	
     void Start()
-    {
+    {			
+			time = 0f;
       speed = 10f;
-			rayLength = 3f;
+			rayLength = 3f;			
+			maxTime = 0.4f;
 			turnrate = 0.15f;
 			
 			carrying = false;
 			
 			rb = GetComponent<Rigidbody>();
+			
+			footsteps = gameObject.GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -73,11 +84,20 @@ public class avatarControls : MonoBehaviour
 			newPosition.z = (newPosition.z < minZ) ? minZ : newPosition.z;
 			newPosition.y = 0;
 			
+			time += Time.deltaTime;
+			if (time > maxTime && (Mathf.Abs(moveX) > 0 || Mathf.Abs(moveZ) > 0))
+			{
+				time = 0f;
+				int index = Random.Range(0, footstepsSounds.Length);
+				footsteps.clip = footstepsSounds[index];
+        footsteps.Play ();
+			}
+			
 			rb.MovePosition(newPosition);
     }
 		
-		void Update()
-		{			
+	void Update()
+		{
 			Vector3 eyesLevel = new Vector3(0, 3.4f, 0);
 			Vector3 hipLevel  = new Vector3(0, 2, 0);
       Debug.DrawRay(transform.position+eyesLevel, transform.forward*rayLength, Color.red);
