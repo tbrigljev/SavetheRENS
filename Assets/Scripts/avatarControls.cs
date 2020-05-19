@@ -24,6 +24,7 @@ public class avatarControls : MonoBehaviour
 	public AudioClip footstepsound;
 	
 	public bool carrying;
+	public bool inMission;
 	
     void Start()
     {			
@@ -34,6 +35,7 @@ public class avatarControls : MonoBehaviour
 			turnrate = 0.15f;
 			
 			carrying = false;
+			inMission = false;
 			
 			rb = GetComponent<Rigidbody>();
 			
@@ -50,10 +52,10 @@ public class avatarControls : MonoBehaviour
 			Vector3 newPosition = transform.position + movement * speed * Time.deltaTime;
 			Vector3 looking     = newPosition - transform.position;
 			
-			if(movement != Vector3.zero)
+			if ((movement != Vector3.zero) && !((Input.GetKey("space"))))
 			{
 				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(looking), turnrate);
-			}
+			}				
 			
 			if (!carrying)
 			{
@@ -93,8 +95,11 @@ public class avatarControls : MonoBehaviour
         footsteps.Play ();
 			}
 			
-			rb.MovePosition(newPosition);
-    }
+			if (movement != Vector3.zero)
+			{
+				rb.MovePosition(newPosition);
+			}
+		}
 		
 	void Update()
 		{

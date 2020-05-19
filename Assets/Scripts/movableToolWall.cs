@@ -11,7 +11,7 @@ public class movableToolWall : MonoBehaviour
 	
 	private GameObject[] players;
 	private GameObject player;
-	private GameObject closestPlayer;	
+	private GameObject closestPlayer;
 	private GameObject boxFail;
 	
 	private Collider col;
@@ -128,26 +128,17 @@ public class movableToolWall : MonoBehaviour
 		{
 			if (Input.GetKeyDown(KeyCode.Q))
 			{
-				Debug.Log("Q has been pressed");
-				//Debug.Log("Player is at: " + player.transform.position);
-				//Debug.Log("Tab is at: " + (transform.position - offset));
 				if ((player.transform.position - (transform.position - offset)).sqrMagnitude < range*range)
 				{
 					Physics.IgnoreCollision(col, player.GetComponent<Collider>());
 					col.isTrigger = true;
 					carrying = true;
 				}
-				//Debug.Log("Position is: " + tabPos);
-				//Debug.Log("Player is at: " + player.transform.position);
-				//Debug.Log("Distance is: " + curD);
-				//Debug.Log("Range is: " + range*range);
-				//Debug.Log("Carrying must be true: " + carrying);
 			}
 		}
 		else if (carrying)
 		{
-			player.GetComponent<avatarControls>().carrying = carrying; 
-			
+			player.GetComponent<avatarControls>().carrying = carrying;
 			transform.position = player.transform.position + player.transform.TransformDirection(new Vector3(0, 3, distance));;
 			trot = player.transform.eulerAngles;
 			trot.y += 180;
@@ -161,6 +152,7 @@ public class movableToolWall : MonoBehaviour
 				{
 					drop();
 					carrying = false;
+					player.GetComponent<avatarControls>().carrying = carrying;
 					col.isTrigger = false;				
 					Physics.IgnoreCollision(col, player.GetComponent<Collider>(), false);
 				}

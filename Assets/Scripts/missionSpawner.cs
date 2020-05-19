@@ -6,14 +6,15 @@ using UnityEngine.UI;
 public class missionSpawner : MonoBehaviour
 {
 	public GameObject[] missions;
-	public GameObject dispenser;
 	private GameObject mission;
 	
 	private float spawnTime;
+	
 	public float minTime;
 	public float maxTime;
 	
 	private int missionType;
+	
 	public int missionCount;
 	public int startTime;	
 	public int missionMax;
@@ -41,10 +42,10 @@ public class missionSpawner : MonoBehaviour
 			missionCount = missionCount + 1;
 			missionCountText.text = "Missions: " + missionCount.ToString();
 			
-			Vector3 spawnPosition = new Vector3(dispenser.transform.position.x - 1 - 2*missionCount, dispenser.transform.position.y + 1, dispenser.transform.position.z);
+			Vector3 spawnPosition = transform.position + transform.forward*2*missionCount;
 			//Debug.Log(spawnPosition);
 						
-			mission = (GameObject)Instantiate(missions[missionType], spawnPosition, gameObject.transform.rotation);
+			mission = Instantiate(missions[missionType], spawnPosition, gameObject.transform.rotation);
 			mission.name = "missionReady" + missionCount.ToString();
 			
 			yield return new WaitForSeconds(spawnTime);
