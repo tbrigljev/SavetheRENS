@@ -33,7 +33,9 @@ public class movableToolWall : MonoBehaviour
 	public float boxFailOffset;		
 
 	private bool allowed;
-	private bool carrying;
+	private bool carried;
+	private bool playerCarrying;
+	private bool playerInMission;
 	//private bool validPosition;
 		
   void Start()
@@ -41,17 +43,19 @@ public class movableToolWall : MonoBehaviour
 		boxFail = null;
 		
     //time = 0f;
-		range = 1.5f;
-		distance = 1f;		
+		//range = 1.5f;
+		//distance = 1f;		
 		//maxTimer = 1f;
-		rayLengthForward = 3f;
+		rayLengthForward = 1f;
 		rayLengthBackward = 0.5f;
 		playersDetection = 1000f;
 		
 		player = null;
 		allowed = false;
-		carrying = false;
+		carried = false;
 		closestPlayer = null;
+		playerCarrying = false;
+		playerInMission = false;
 		//validPosition = false;
 		
 		col = GetComponent<Collider>();
@@ -112,8 +116,9 @@ public class movableToolWall : MonoBehaviour
 		Debug.DrawRay(transform.position,  transform.forward*rayLengthForward,  Color.blue);
 		Debug.DrawRay(transform.position, -transform.forward*rayLengthBackward, Color.red);
 		
-		player = findClosestPlayer();		
-		player.GetComponent<avatarControls>().carrying = carrying;
+		player = findClosestPlayer();
+		playerCarrying = player.GetComponent<avatarControls>().carrying;
+		playerInMission = player.GetComponent<avatarControls>().inMission;
 		
 		/*time += Time.deltaTime;
 		if (time > maxTimer)
@@ -127,19 +132,20 @@ public class movableToolWall : MonoBehaviour
 			Debug.Log("Angle with back wall is: " + angle);
 		}*/
 		
-		if (!carrying)
+		if (!carried && !playerCarrying && !playerInMission)
 		{
 			if (Input.GetKeyDown(KeyCode.Q))
 			{
 				if ((player.transform.position - (transform.position - offset)).sqrMagnitude < range*range)
 				{
 					Physics.IgnoreCollision(col, player.GetComponent<Collider>());
-					col.isTrigger = true;
-					carrying = true;
+					//col.isTrigger = true;
+					carried = true;
+					player.GetComponent<avatarControls>().carrying = carried;
 				}
 			}
 		}
-		else if (carrying)
+		else if (carried)
 		{
 			transform.position = player.transform.position + player.transform.TransformDirection(new Vector3(0, 3, distance));;
 			trot = player.transform.eulerAngles;
@@ -153,8 +159,9 @@ public class movableToolWall : MonoBehaviour
 				if (Input.GetKeyDown(KeyCode.Q))
 				{
 					drop();
-					carrying = false;
-					col.isTrigger = false;				
+					carried = false;
+					player.GetComponent<avatarControls>().carrying = carried;
+					//col.isTrigger = false;				
 					Physics.IgnoreCollision(col, player.GetComponent<Collider>(), false);
 				}
 			}
@@ -188,9 +195,14 @@ public class movableToolWall : MonoBehaviour
     transform.rotation = Quaternion.Euler(rot.x, rot.y, rot.z);
 	}
 	
-	void OnTriggerStay(Collider collider)
+	void OnCollisionStay(Collision collision)
+	{
+		allowed = false;
+	}
+	
+	/*void OnTriggerStay(Collider collider)
 	{
 		allowed = false;
 		//time = 0f;
-	}
+	}*/
 }

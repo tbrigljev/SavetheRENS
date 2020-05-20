@@ -8,17 +8,21 @@ public class missionsPickup : MonoBehaviour
 	private GameObject player;	
 	private GameObject closestPlayer;	
 	
-	private Vector3 offsetDetect = new Vector3(0, 2, 0);
+	private Vector3 offsetDetect = new Vector3(0, 3, 0);
 	private Vector3 offsetCarry = new Vector3(0.6f, 1.65f, 0.2f);
 	private Vector3 forceDirection = new Vector3(0, 0, 1);
+	private Vector3 latestPosition;
 	
 	private float currentDistanceToPlayers;
 	private float currentDistanceToClosestPlayer;
 	private float distance;
 	
-	private bool carrying;
+	private bool carried;
+	private bool playerCarrying;
+	private bool playerInMission;
 	
-	public float range;	
+	private float rangeEyes;	
+	private float rangeFloor;
 	public float thrust;	
 	
 	private string globalName;
@@ -27,11 +31,18 @@ public class missionsPickup : MonoBehaviour
   void Start()
   {
     GetComponent<Rigidbody>().useGravity = true;
-		range = 1.2f;
-		thrust = 2f;	
+		rangeEyes = 2f;
+		rangeFloor = 1.2f;
+		thrust = 10f;
+		
+		carried = false;
+		playerCarrying = false;
+		playerInMission = false;
 		
 		globalName = gameObject.name;
 		localName = "currentMission";
+		
+		GetComponent<Rigidbody>().isKinematic = true;
   }
 	
 	GameObject findClosestPlayer()
@@ -54,41 +65,44 @@ public class missionsPickup : MonoBehaviour
 	void Update()
 	{
 		player = findClosestPlayer();
-		if (carrying == false)
+		playerCarrying = player.GetComponent<avatarControls>().carrying;
+		playerInMission = player.GetComponent<avatarControls>().inMission;
+		
+		if (!carried && !playerInMission && !playerCarrying)
 		{
 			if (Input.GetKeyDown(KeyCode.E))
 			{
-				if (((player.transform.position - transform.position).sqrMagnitude < range*range) ||
-						((player.transform.position + offsetDetect - transform.position).sqrMagnitude < range*range))
+				if (((player.transform.position - transform.position).sqrMagnitude < rangeFloor*rangeFloor) ||
+						((player.transform.position + offsetDetect - transform.position).sqrMagnitude < rangeEyes*rangeEyes))
 				{
 					pickup();
-					carrying = true;
+					carried = true;
+					player.GetComponent<avatarControls>().inMission = carried;
 				}
 			}
 		}
-		else if (carrying == true)
-		{
-			
-			player.GetComponent<avatarControls>().inMission = carrying;
+		else if (carried)
+		{			
+			player.GetComponent<avatarControls>().inMission = playerInMission;
 			transform.localPosition = offsetCarry;
 			if (Input.GetKeyDown(KeyCode.E))
 			{
 				drop();
-				carrying = false;				
-				player.GetComponent<avatarControls>().inMission = carrying;
+				carried = false;				
+				player.GetComponent<avatarControls>().inMission = carried;
 			}
 			else if (Input.GetKeyDown(KeyCode.T))
 			{
 				yeet();
 				GetComponent<Rigidbody>().AddForce(player.transform.forward * thrust, ForceMode.Impulse);
-				carrying = false;
-				player.GetComponent<avatarControls>().inMission = carrying;
+				carried = false;
+				player.GetComponent<avatarControls>().inMission = carried;
 			}
 		}
 	}
 	
 	void pickup()
-	{
+	{		
 		GetComponent<Rigidbody>().useGravity = false;
 		GetComponent<Rigidbody>().isKinematic = true;
 		GetComponent<Collider>().enabled = false;
@@ -104,10 +118,12 @@ public class missionsPickup : MonoBehaviour
 		transform.SetParent(null);
 		
 		gameObject.name = globalName;
+		latestPosition = transform.position;
 		
 		GetComponent<Rigidbody>().useGravity = true;
 		GetComponent<Rigidbody>().isKinematic = false;
 		GetComponent<Collider>().enabled = true;
+		transform.position = latestPosition;
 	}
 	
 	void yeet()

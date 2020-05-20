@@ -8,7 +8,7 @@ public class rayCastBonus : MonoBehaviour
 	
     void Start()
     {
-      rayLength = 3f;
+      rayLength = 2f;
     }
     void Update()
     {

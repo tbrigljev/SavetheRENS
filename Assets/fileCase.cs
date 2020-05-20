@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class rayCastStorage : MonoBehaviour
+public class fileCase : MonoBehaviour
 {
 	private float rayLength;
 	

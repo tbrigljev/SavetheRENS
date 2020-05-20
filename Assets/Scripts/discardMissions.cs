@@ -21,6 +21,7 @@ public class discardMissions : MonoBehaviour
 	private float currentDistanceToClosestPlayer;
 	
 	private float time;
+	public float progress;
 	public float maxTime;
 	
 	private bool readyForMission;
@@ -29,6 +30,10 @@ public class discardMissions : MonoBehaviour
 	public Text missionDiscardProgress;
 	
 	private string stationMessage;
+	
+	public Image progressBar;
+	public Image cooldownBar;
+	public GameObject discardCompletePrefab;
 
 	void Start()
 	{
@@ -106,7 +111,9 @@ public class discardMissions : MonoBehaviour
 				if (time < maxTime)
 				{
 					time += Time.deltaTime;
-					stationMessage = "Progress: " + Mathf.Round(Mathf.Round(time/maxTime*100)/10)*10 + "%";
+					progress = time/maxTime;
+					stationMessage = "Progress: " + Mathf.Round(Mathf.Round(progress*100)/10)*10 + "%";
+					progressBar.fillAmount = progress;
 				}
 				else if (time > maxTime)
 				{
@@ -115,6 +122,9 @@ public class discardMissions : MonoBehaviour
 					missions.GetComponent<missionSpawner>().missionCount -= 1;
 					cooldown = true;
 					Destroy(boxReady);
+					player.GetComponent<avatarControls>().inMission = false;
+					
+					showCompleteDiscard();
 				}
 			}
 		}
@@ -122,18 +132,22 @@ public class discardMissions : MonoBehaviour
 		{
 			if (boxReady == null)
 			{
+				progressBar.fillAmount = 0f;
 				boxReady = Instantiate(boxCooldownPrefab, transform.position, transform.rotation);
 			}
 			
 			if (time > 0f)
 			{
-				stationMessage = "Station in cooldown: " + Mathf.Round(Mathf.Round(time/maxTime*100)/10)*10 + "%";
 				time -= Time.deltaTime;
+				progress = time/maxTime;				
+				stationMessage = "Station in cooldown: " + Mathf.Round(Mathf.Round(progress*100)/10)*10 + "%";
+				cooldownBar.fillAmount = progress;
 			}
 			else
 			{
 				Destroy(boxReady);
 				stationMessage = "Station ready!";
+				cooldownBar.fillAmount = 0f;
 				cooldown = false;
 			}
 		}
@@ -147,5 +161,12 @@ public class discardMissions : MonoBehaviour
 			}
 		}
     Debug.DrawRay(transform.position + offset, transform.forward*rayLength, Color.blue);
+	}
+	
+	void showCompleteDiscard()
+	{
+		offset.y = 4;
+		Instantiate(discardCompletePrefab, transform.position + offset, Quaternion.identity, transform);
+		
 	}
 }

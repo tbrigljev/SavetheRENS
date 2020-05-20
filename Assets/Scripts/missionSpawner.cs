@@ -7,6 +7,7 @@ public class missionSpawner : MonoBehaviour
 {
 	public GameObject[] missions;
 	private GameObject mission;
+	private GameObject box;
 	
 	private ParticleSystem readyParticles;
 	
@@ -27,18 +28,28 @@ public class missionSpawner : MonoBehaviour
 	public float amount;
 	
 	private string spawnerMessage;
+	
+	private bool hasMissions;
 			
 	public Text missionCountText;
 	
   void Start()
   {
 		missionCount = 0;
+		missionMax = 3;
 		allMissions = 0;
 		rayLength = 3f;
 		time = 0f;
+		minTime = 3f;
+		maxTime = 5f;
+		speed = 20f;
+		amount = 0.01f;
 		
 		readyParticles = GetComponentInChildren<ParticleSystem>();
 		spawnerMessage = "Waiting on new missions!";
+		
+		box = GameObject.Find("FrontStopper");
+		Physics.IgnoreCollision(GetComponent<Collider>(), box.GetComponent<Collider>());
   }
 
   void Update()
@@ -69,21 +80,40 @@ public class missionSpawner : MonoBehaviour
 				missionType = Random.Range(0, missions.Length);				
 				missionCount += 1;
 				allMissions += 1;
-				Vector3 spawnPosition = transform.position + transform.forward*2*missionCount;
+				Vector3 spawnPosition = transform.position;
+				spawnPosition.x += 0.2f;
+				spawnPosition.y += 0.7f - (0.1f*missionCount);
+				if (missionCount < 10)
+				{
+					spawnPosition.z -=0.2f;
+				}
+				else if (missionCount < 20)
+				{
+					spawnPosition.z -=0.0f;
+				}
+				else if (missionCount < 30)
+				{
+					spawnPosition.z +=0.2f;
+				}
 				mission = Instantiate(missions[missionType], spawnPosition, gameObject.transform.rotation);				
 				mission.name = "missionReady" + missionCount.ToString();
 			}
 			time = 0f;
 		}
 		
-		if (missionCount > 0)
+		if (hasMissions)
 		{
 			Vector3 boxPosition = transform.position;
-			boxPosition.z += Mathf.Sin(Time.time * speed) * amount;
+			boxPosition.z += (Mathf.Sin(Time.time * speed) * amount);
 			transform.position = boxPosition;
-		}		
+			hasMissions = false;
+		}
 		
-		Vector3 offset  = new Vector3(0, 2, 0);
     Debug.DrawRay(transform.position, transform.forward*rayLength, Color.blue);
   }
+	
+	void OnTriggerStay(Collider collider)
+	{
+		hasMissions = true;
+	}
 }

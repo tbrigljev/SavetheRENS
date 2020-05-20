@@ -21,25 +21,28 @@ public class movableToolFurniture : MonoBehaviour
 	public float boxFailOffset;
 	
 	private bool allowed;
-	private bool carrying;
+	private bool carried;
+	private bool playerCarrying;
+	private bool playerInMission;
 	
   void Start()
   {
+		/*range = 3f;
 		if (gameObject.name == "FileCase")
 		{
-			range = 3f;
 			distance = 2.5f;
 		}
 		else
 		{
-			range = 3f;
 			distance = 2f;
-		}
+		}*/
 		
 		player = null;
-		carrying = false;
+		carried = false;
 		closestPlayer = null;		
 		playersDetection = 1000f;
+		playerCarrying = false;
+		playerInMission = false;
 		
 		GetComponent<Rigidbody>().isKinematic = true;
   }
@@ -64,21 +67,23 @@ public class movableToolFurniture : MonoBehaviour
   void Update()
   {
     player = findClosestPlayer();
-		player.GetComponent<avatarControls>().carrying = carrying;
+		playerCarrying = player.GetComponent<avatarControls>().carrying;
+		playerInMission = player.GetComponent<avatarControls>().inMission;
 		
-		if (!carrying)
+		if (!carried && !playerCarrying && !playerInMission)
 		{
 			if (Input.GetKeyDown(KeyCode.Q))
 			{
 				if ((player.transform.position - transform.position).sqrMagnitude < range*range)
 				{
-					carrying = true;
+					carried = true;
+					player.GetComponent<avatarControls>().carrying = carried;
 					GetComponent<Rigidbody>().isKinematic = false;
 					transform.position = player.transform.position + player.transform.TransformDirection(new Vector3(0, 0, distance));
 				}
 			}
 		}
-		else if (carrying)
+		else if (carried)
 		{
 			//GetComponent<Rigidbody>().AddForce(player.transform.forward * 1/(Mathf.Abs((player.transform.position - transform.position).sqrMagnitude)));
 			transform.position = player.transform.position + player.transform.TransformDirection(new Vector3(0, 0, distance));
@@ -89,7 +94,8 @@ public class movableToolFurniture : MonoBehaviour
 			if (Input.GetKeyDown(KeyCode.Q))
 			{
 				drop();
-				carrying = false;
+				carried = false;
+				player.GetComponent<avatarControls>().carrying = carried;
 				GetComponent<Rigidbody>().isKinematic = true;
 			}
 		}
