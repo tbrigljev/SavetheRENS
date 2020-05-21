@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class avatarControls : MonoBehaviour
 {
+	private GameObject globalModifiers;
+	private GameObject camera;
+	
 	private Rigidbody rb;
 	
 	public float speed;
-	public float maxTime;
-	public float turnrate;
+	private float speedModifier;
+	private float stepsTime;
+	private float turnrate;
 	
 	private float minX;
 	private float maxX;
@@ -19,9 +23,8 @@ public class avatarControls : MonoBehaviour
 	private float maxMiddle;	
 	private float rayLength;
 	
-	public AudioSource footsteps;
-	public AudioClip[] footstepsSounds;
-	public AudioClip footstepsound;
+	public AudioSource footSteps;
+	public AudioClip[] footStepsSounds;
 	
 	public bool carrying;
 	public bool inMission;
@@ -31,7 +34,7 @@ public class avatarControls : MonoBehaviour
 			time = 0f;
       speed = 10f;
 			rayLength = 3f;			
-			maxTime = 0.4f;
+			stepsTime = 0.4f;
 			turnrate = 0.15f;
 			
 			carrying = false;
@@ -39,7 +42,13 @@ public class avatarControls : MonoBehaviour
 			
 			rb = GetComponent<Rigidbody>();
 			
-			footsteps = gameObject.GetComponent<AudioSource>();
+			footSteps = gameObject.GetComponent<AudioSource>();
+			
+			globalModifiers = GameObject.Find("Global");
+			speedModifier = globalModifiers.GetComponent<globalModifiers>().playerSpeedModifier;
+			
+			camera = GameObject.Find("MainCamera");
+			camera.GetComponent<cameraControls>().player = gameObject;
     }
 
     void FixedUpdate()
@@ -87,12 +96,12 @@ public class avatarControls : MonoBehaviour
 			newPosition.y = 0;
 			
 			time += Time.deltaTime;
-			if (time > maxTime && (Mathf.Abs(moveX) > 0 || Mathf.Abs(moveZ) > 0))
+			if (time > stepsTime && (Mathf.Abs(moveX) > 0 || Mathf.Abs(moveZ) > 0))
 			{
 				time = 0f;
-				int index = Random.Range(0, footstepsSounds.Length);
-				footsteps.clip = footstepsSounds[index];
-        footsteps.Play ();
+				int index = Random.Range(0, footStepsSounds.Length);
+				footSteps.clip = footStepsSounds[index];
+        footSteps.Play ();
 			}
 			
 			if (movement != Vector3.zero)
@@ -106,11 +115,18 @@ public class avatarControls : MonoBehaviour
 		}
 		
 	void Update()
+	{
+		if (speedModifier != globalModifiers.GetComponent<globalModifiers>().playerSpeedModifier)
 		{
-			Vector3 eyesLevel = new Vector3(0, 3.4f, 0);
-			Vector3 hipLevel  = new Vector3(0, 2, 0);
-      Debug.DrawRay(transform.position+eyesLevel, transform.forward*rayLength, Color.red);
-			Debug.DrawRay(transform.position+hipLevel,  transform.forward*rayLength, Color.green);
-			Debug.DrawRay(transform.position,           transform.forward*rayLength, Color.blue);
+			speedModifier = globalModifiers.GetComponent<globalModifiers>().playerSpeedModifier;
+			speed *= speedModifier;
+			stepsTime /= speedModifier;
 		}
+		
+		Vector3 eyesLevel = new Vector3(0, 3.4f, 0);
+		Vector3 hipLevel  = new Vector3(0, 2, 0);
+    Debug.DrawRay(transform.position+eyesLevel, transform.forward*rayLength, Color.red);
+		Debug.DrawRay(transform.position+hipLevel,  transform.forward*rayLength, Color.green);
+		Debug.DrawRay(transform.position,           transform.forward*rayLength, Color.blue);
+	}
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class cameraControls : MonoBehaviour
 {
-    public GameObject player;		
+    public GameObject player;
+		public int testVar;
     private Vector3 offset;
 		private Vector3 cameraPosition;
 		private float limitRight;
@@ -18,7 +19,6 @@ public class cameraControls : MonoBehaviour
 			limitLeft = -9.6f;
 			limitZ = 4.5f;
     }
-
  
     void LateUpdate()
     {

@@ -8,15 +8,18 @@ public class missionSpawner : MonoBehaviour
 	public GameObject[] missions;
 	private GameObject mission;
 	private GameObject box;
+	private GameObject missionCountText;
 	
 	private ParticleSystem readyParticles;
 	
-	private float spawnTime;
-	
 	private float time;
+	private float spawnTime;
+	private float rayLength;
+
 	public float minTime;
 	public float maxTime;
-	private float rayLength;
+	public float shakeSpeed;
+	public float shakeAmount;	
 	
 	private int missionType;
 	
@@ -24,14 +27,11 @@ public class missionSpawner : MonoBehaviour
 	public int missionMax;
 	public int allMissions;
 	
-	public float speed;
-	public float amount;
-	
 	private string spawnerMessage;
 	
 	private bool hasMissions;
 			
-	public Text missionCountText;
+	//private Text missionCountText;
 	
   void Start()
   {
@@ -42,19 +42,21 @@ public class missionSpawner : MonoBehaviour
 		time = 0f;
 		minTime = 3f;
 		maxTime = 5f;
-		speed = 20f;
-		amount = 0.01f;
+		shakeSpeed = 20f;
+		shakeAmount = 0.01f;
 		
 		readyParticles = GetComponentInChildren<ParticleSystem>();
 		spawnerMessage = "Waiting on new missions!";
 		
 		box = GameObject.Find("FrontStopper");
 		Physics.IgnoreCollision(GetComponent<Collider>(), box.GetComponent<Collider>());
+		
+		missionCountText = GameObject.Find("GlobalCounting");
   }
 
   void Update()
   {
-		missionCountText.text = spawnerMessage;
+		missionCountText.GetComponent<Text>().text = spawnerMessage;
 		
 		if (missionCount > 0)
 		{
@@ -104,7 +106,7 @@ public class missionSpawner : MonoBehaviour
 		if (hasMissions)
 		{
 			Vector3 boxPosition = transform.position;
-			boxPosition.z += (Mathf.Sin(Time.time * speed) * amount);
+			boxPosition.z += (Mathf.Sin(Time.time * shakeSpeed) * shakeAmount);
 			transform.position = boxPosition;
 			hasMissions = false;
 		}

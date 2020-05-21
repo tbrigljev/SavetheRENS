@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class backgroundAudio : MonoBehaviour
+public class backgroundMusic : MonoBehaviour
 {
 	public float endIntro;
 	
