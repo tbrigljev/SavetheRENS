@@ -21,9 +21,17 @@ public class missionsPickup : MonoBehaviour
 	private bool playerCarrying;
 	private bool playerInMission;
 	
+	public int totalPoints;
+	public int currentPoints;
+	
 	private float rangeEyes;	
 	private float rangeFloor;
-	public float thrust;	
+	public float thrust;
+	
+	private AudioSource pickupDropMission;
+	public AudioClip pickupSound;
+	public AudioClip dropSound;
+	public AudioClip yeetSound;
 	
 	private string globalName;
 	private string localName;
@@ -35,9 +43,14 @@ public class missionsPickup : MonoBehaviour
 		rangeFloor = 1.2f;
 		thrust = 10f;
 		
+		totalPoints = 10;
+		currentPoints = 0;
+		
 		carried = false;
 		playerCarrying = false;
 		playerInMission = false;
+		
+		pickupDropMission = gameObject.GetComponent<AudioSource>();
 		
 		globalName = gameObject.name;
 		localName = "currentMission";
@@ -70,7 +83,7 @@ public class missionsPickup : MonoBehaviour
 		
 		if (!carried && !playerInMission && !playerCarrying)
 		{
-			if (Input.GetKeyDown(KeyCode.E))
+			if (player.GetComponent<avatarInputs>().actionE)
 			{
 				if (((player.transform.position - transform.position).sqrMagnitude < rangeFloor*rangeFloor) ||
 						((player.transform.position + offsetDetect - transform.position).sqrMagnitude < rangeEyes*rangeEyes))
@@ -85,13 +98,13 @@ public class missionsPickup : MonoBehaviour
 		{			
 			player.GetComponent<avatarControls>().inMission = playerInMission;
 			transform.localPosition = offsetCarry;
-			if (Input.GetKeyDown(KeyCode.E))
+			if (player.GetComponent<avatarInputs>().actionE)
 			{
 				drop();
 				carried = false;				
 				player.GetComponent<avatarControls>().inMission = carried;
 			}
-			else if (Input.GetKeyDown(KeyCode.T))
+			else if (player.GetComponent<avatarInputs>().actionT)
 			{
 				yeet();
 				GetComponent<Rigidbody>().AddForce(player.transform.forward * thrust, ForceMode.Impulse);
@@ -108,6 +121,9 @@ public class missionsPickup : MonoBehaviour
 		GetComponent<Collider>().enabled = false;
 		
 		gameObject.name = localName;
+		
+		pickupDropMission.clip = pickupSound;
+		pickupDropMission.Play();
 
 		transform.SetParent(player.transform);
 		transform.localRotation = Quaternion.identity;
@@ -118,7 +134,10 @@ public class missionsPickup : MonoBehaviour
 		transform.SetParent(null);
 		
 		gameObject.name = globalName;
-		latestPosition = transform.position;
+		latestPosition = transform.position + transform.forward*0.3f;
+		
+		pickupDropMission.clip = dropSound;
+		pickupDropMission.Play();
 		
 		GetComponent<Rigidbody>().useGravity = true;
 		GetComponent<Rigidbody>().isKinematic = false;
@@ -131,6 +150,9 @@ public class missionsPickup : MonoBehaviour
 		transform.SetParent(null);
 		
 		gameObject.name = globalName;
+		
+		pickupDropMission.clip = yeetSound;
+		pickupDropMission.Play();
 		
 		GetComponent<Rigidbody>().useGravity = true;
 		GetComponent<Rigidbody>().isKinematic = false;

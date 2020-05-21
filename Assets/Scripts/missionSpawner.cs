@@ -9,6 +9,7 @@ public class missionSpawner : MonoBehaviour
 	private GameObject mission;
 	private GameObject box;
 	private GameObject missionCountText;
+	private GameObject globalModifiers;
 	
 	private ParticleSystem readyParticles;
 	
@@ -29,6 +30,8 @@ public class missionSpawner : MonoBehaviour
 	
 	private string spawnerMessage;
 	
+	private AudioSource newMissionSound;
+	
 	private bool hasMissions;
 			
 	//private Text missionCountText;
@@ -48,8 +51,13 @@ public class missionSpawner : MonoBehaviour
 		readyParticles = GetComponentInChildren<ParticleSystem>();
 		spawnerMessage = "Waiting on new missions!";
 		
+		newMissionSound = gameObject.GetComponent<AudioSource>();
+		
 		box = GameObject.Find("FrontStopper");
 		Physics.IgnoreCollision(GetComponent<Collider>(), box.GetComponent<Collider>());
+		
+		globalModifiers = GameObject.Find("Global");
+		
 		
 		missionCountText = GameObject.Find("GlobalCounting");
   }
@@ -74,11 +82,12 @@ public class missionSpawner : MonoBehaviour
     spawnTime = Random.Range(minTime, maxTime);
 		
 		time += Time.deltaTime;
-		if (time > spawnTime)
+		if ((time > spawnTime) && !(globalModifiers.GetComponent<globalModifiers>().gameOver))
 		{
 			if ((missionCount < missionMax) && (allMissions < 4))
 			{
 				readyParticles.Play();
+				newMissionSound.Play();
 				missionType = Random.Range(0, missions.Length);				
 				missionCount += 1;
 				allMissions += 1;
@@ -103,7 +112,7 @@ public class missionSpawner : MonoBehaviour
 			time = 0f;
 		}
 		
-		if (hasMissions)
+		if (hasMissions && !(globalModifiers.GetComponent<globalModifiers>().gameOver))
 		{
 			Vector3 boxPosition = transform.position;
 			boxPosition.z += (Mathf.Sin(Time.time * shakeSpeed) * shakeAmount);

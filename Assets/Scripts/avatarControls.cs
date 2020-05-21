@@ -23,7 +23,7 @@ public class avatarControls : MonoBehaviour
 	private float maxMiddle;	
 	private float rayLength;
 	
-	public AudioSource footSteps;
+	private AudioSource footSteps;
 	public AudioClip[] footStepsSounds;
 	
 	public bool carrying;

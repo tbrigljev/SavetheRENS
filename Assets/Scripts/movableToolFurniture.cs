@@ -72,8 +72,9 @@ public class movableToolFurniture : MonoBehaviour
 		
 		if (!carried && !playerCarrying && !playerInMission)
 		{
-			if (Input.GetKeyDown(KeyCode.Q))
+			if (player.GetComponent<avatarInputs>().actionQ)
 			{
+				Debug.Log("Q used to move furniture");
 				if ((player.transform.position - transform.position).sqrMagnitude < range*range)
 				{
 					carried = true;
@@ -91,7 +92,7 @@ public class movableToolFurniture : MonoBehaviour
 			trot.y += 180;
 			transform.rotation = Quaternion.Euler(trot);
 			
-			if (Input.GetKeyDown(KeyCode.Q))
+			if (player.GetComponent<avatarInputs>().actionQ)
 			{
 				drop();
 				carried = false;

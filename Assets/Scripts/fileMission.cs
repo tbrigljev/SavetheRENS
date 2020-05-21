@@ -1,16 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;             
+using UnityEngine;
 using UnityEngine.UI;
 
-public class discardMissions : MonoBehaviour
+public class fileMission : MonoBehaviour
 {
 	private GameObject[] players;
 	private GameObject player;
 	private GameObject closestPlayer;	
 	private GameObject boxReady;
-	private GameObject missions;
-	private GameObject progressText;	
 	private GameObject globalModifiers;
 	
 	private Vector3 raycastOffset  = new Vector3(0, 2, 0);
@@ -26,29 +24,24 @@ public class discardMissions : MonoBehaviour
 	private float cooldownMissionsModifier;
 	
 	private float time;
-	public float progress;
+	private float progress;
 	public float maxTimeComplete;
 	public float maxTimeCooldown;
 	
 	private bool readyForMission;
-	public bool cooldown;
+	private bool cooldown;
 	
-	private Text missionDiscardProgress;
-	
-	private string stationMessage;
-	
-	private AudioSource discardMissionSound;
+	private AudioSource fileMissionSound;
 	
 	public Image progressBar;
 	public Image cooldownBar;
-	public GameObject discardCompletePrefab;
-
-	void Start()
-	{
-		rayLength = 1.5f;
+	
+  void Start()
+  {
+		rayLength = 3f;
 		time = 0f;
-		maxTimeComplete = 3f;
-		maxTimeCooldown = 2f;
+		maxTimeComplete = 2f;
+		maxTimeCooldown = 1f;
 		
 		readyForMission = false;
 		cooldown = false;
@@ -57,18 +50,11 @@ public class discardMissions : MonoBehaviour
 		player = null;
 		closestPlayer = null;
 		
-		missions = GameObject.Find("Missions");
-		
 		globalModifiers = GameObject.Find("Global");
 		completeMissionsModifier = globalModifiers.GetComponent<globalModifiers>().completeMissionsModifier;
 		cooldownMissionsModifier = globalModifiers.GetComponent<globalModifiers>().cooldownMissionsModifier;
 		
-		discardMissionSound = gameObject.GetComponent<AudioSource>();
-		
-		stationMessage = "Station ready!";
-		
-		progressText = GameObject.Find("GlobalInteract");
-		missionDiscardProgress = progressText.GetComponent<Text>();
+		fileMissionSound = gameObject.GetComponent<AudioSource>();
   }
 	
 	GameObject findClosestPlayer()
@@ -87,7 +73,7 @@ public class discardMissions : MonoBehaviour
     }
     return closestPlayer;
   }
-	
+
 	void FixedUpdate()
 	{
 		player = findClosestPlayer();
@@ -103,7 +89,7 @@ public class discardMissions : MonoBehaviour
 			readyForMission = false;
 		}
 	}
-  
+	
 	void Update()
 	{
 		if (completeMissionsModifier != globalModifiers.GetComponent<globalModifiers>().completeMissionsModifier)
@@ -116,8 +102,6 @@ public class discardMissions : MonoBehaviour
 			cooldownMissionsModifier = globalModifiers.GetComponent<globalModifiers>().cooldownMissionsModifier;
 			maxTimeCooldown /= completeMissionsModifier;
 		}
-		
-		missionDiscardProgress.text = stationMessage;
 		
 		if ((readyForMission) && (!cooldown))
 		{
@@ -132,20 +116,18 @@ public class discardMissions : MonoBehaviour
 				{
 					time += Time.deltaTime;
 					progress = time/maxTimeComplete;
-					stationMessage = "Progress: " + Mathf.Round(Mathf.Round(progress*100)/10)*10 + "%";
 					progressBar.fillAmount = progress;
 				}
 				else if (time > maxTimeComplete)
 				{
-					Destroy(player.transform.Find("currentMission").gameObject);					
-					stationMessage = "Discard completed!";
-					missions.GetComponent<missionSpawner>().missionCount -= 1;
+					Destroy(player.transform.Find("currentMission").gameObject);	
+					globalModifiers.GetComponent<globalModifiers>().filedMissions += 1;
+					globalModifiers.GetComponent<globalModifiers>().newPoints += 5;
 					cooldown = true;
 					Destroy(boxReady);
 					player.GetComponent<avatarControls>().inMission = false;
 					
-					showCompleteDiscard();
-					discardMissionSound.Play();
+					fileMissionSound.Play();
 				}
 			}
 		}
@@ -160,14 +142,12 @@ public class discardMissions : MonoBehaviour
 			if (time > 0f)
 			{
 				time -= Time.deltaTime;
-				progress = time/maxTimeCooldown;				
-				stationMessage = "Station in cooldown: " + Mathf.Round(Mathf.Round(progress*100)/10)*10 + "%";
+				progress = (time - (maxTimeComplete - maxTimeCooldown))/maxTimeCooldown;
 				cooldownBar.fillAmount = progress;
 			}
 			else
 			{
 				Destroy(boxReady);
-				stationMessage = "Station ready!";
 				cooldownBar.fillAmount = 0f;
 				cooldown = false;
 			}
@@ -178,15 +158,8 @@ public class discardMissions : MonoBehaviour
 			{
 				time = 0f;
 				Destroy(boxReady);
-				stationMessage = "Station ready!";
 			}
 		}
     Debug.DrawRay(transform.position + raycastOffset, transform.forward*rayLength, Color.blue);
-	}
-	
-	void showCompleteDiscard()
-	{
-		var rot = transform.eulerAngles + 180f * Vector3.up;
-		Instantiate(discardCompletePrefab, transform.position, Quaternion.Euler(rot), transform);		
 	}
 }

@@ -6,39 +6,51 @@ using UnityEngine.SceneManagement;
 public class mainMenu : MonoBehaviour
 {
 	private GameObject textStartUp;
+	private GameObject menuButtons;
+	private GameObject playButton;
 	
 	private float time;
 	private float waitTime;
 	
 	public int selectedButton;
-	public int maxButtons = 1;
+	public int maxButtons;
 	
 	public Color backgroundDefault;
 	public Color textDefault;
 	public Color backgroundSelected;
 	public Color textSelected;
 	
-	private bool wait;
+	private bool waitMenu;
+	private bool waitButtons;
+	
+	private float timeVar;
 	
 	void Start()
 	{
 		time = 0f;
 		waitTime = 1f;
+		timeVar = 0f;
 		selectedButton = 0;
 		maxButtons = 3;
 		
-		wait = false;
+		waitMenu = false;
+		waitButtons = false;
 		
 		backgroundDefault = Color.black;
 		textDefault = Color.white;
 		backgroundSelected = new Color32(255,160,65,255);
 		textSelected = new Color32(6,61,232,255);
 		
-		textStartUp = transform.Find("TextStartUp").gameObject;
+		playButton = GameObject.Find("ButtonPlay");
+		
+		textStartUp = GameObject.Find("TextStartUp");
+		textStartUp.SetActive(true);
+		menuButtons = GameObject.Find("Buttons");
+		menuButtons.SetActive(false);
 	}
 	
 	void Update()
-	{		
+	{	
 		if (time < waitTime)
 		{
 			time += Time.deltaTime;
@@ -46,17 +58,31 @@ public class mainMenu : MonoBehaviour
 		else if (time > waitTime)
 		{
 			if (selectedButton < 1)
-			{
+			{				
 				if (Input.anyKey)
 				{
 					selectedButton = 1;
-					wait = true;
 					textStartUp.SetActive(false);
+					menuButtons.SetActive(true);
+					waitMenu = true;
+					time = 0f;
 				}
 			}
 		}
 		
-		if (wait)
+		if (waitMenu)
+		{
+			if (time < waitTime)
+			{
+				time += Time.deltaTime;
+			}
+			else
+			{
+				waitButtons = true;
+			}
+		}
+		
+		if (waitButtons)
 		{
 			if (Input.GetKeyDown(KeyCode.DownArrow))
 			{

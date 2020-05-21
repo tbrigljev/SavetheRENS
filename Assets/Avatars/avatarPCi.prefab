@@ -321,9 +321,10 @@ GameObject:
   - component: {fileID: 8516384580610230795}
   - component: {fileID: 7735576280912535128}
   - component: {fileID: 3845436064455222679}
+  - component: {fileID: 114904983337852350}
   - component: {fileID: 3845436066040862555}
   m_Layer: 0
-  m_Name: avatarPCi old 1
+  m_Name: avatarPCi
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,7 +407,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  footSteps: {fileID: 0}
   footStepsSounds:
   - {fileID: 8300000, guid: a07f03f2e575217419c727829d08f99d, type: 3}
   - {fileID: 8300000, guid: d3ecf264f1bd76542a3c4b4a075bec48, type: 3}
@@ -416,6 +416,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8548679ab6e10a9489ac10ccd6e87b75, type: 3}
   carrying: 0
   inMission: 0
+--- !u!114 &114904983337852350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3845436066040862552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e40959b39fdd0348972a60c832b840d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &3845436066040862555
 AudioSource:
   m_ObjectHideFlags: 0

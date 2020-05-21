@@ -100,15 +100,6 @@ public class movableToolWall : MonoBehaviour
 		{
 			allowed = false;
 		}
-		
-		/*time += Time.deltaTime;
-		
-		if (time > maxTimer)
-		{
-			Debug.Log(time);
-			allowed = true;
-			time = 0f;
-		}*/
 	}
   
 	void Update()
@@ -120,26 +111,13 @@ public class movableToolWall : MonoBehaviour
 		playerCarrying = player.GetComponent<avatarControls>().carrying;
 		playerInMission = player.GetComponent<avatarControls>().inMission;
 		
-		/*time += Time.deltaTime;
-		if (time > maxTimer)
-		{			
-			Debug.Log("Closest player is: " + player.name);
-			angle = Vector3.Angle(wallWest.transform.forward, transform.forward);
-			Debug.Log("Angle with west wall is: " + angle);
-			angle = Vector3.Angle(wallEast.transform.forward, transform.forward);
-			Debug.Log("Angle with east wall is: " + angle);
-			angle = Vector3.Angle(wallBack.transform.forward, transform.forward);
-			Debug.Log("Angle with back wall is: " + angle);
-		}*/
-		
 		if (!carried && !playerCarrying && !playerInMission)
 		{
-			if (Input.GetKeyDown(KeyCode.Q))
+			if (player.GetComponent<avatarInputs>().actionQ)
 			{
 				if ((player.transform.position - (transform.position - offset)).sqrMagnitude < range*range)
 				{
 					Physics.IgnoreCollision(col, player.GetComponent<Collider>());
-					//col.isTrigger = true;
 					carried = true;
 					player.GetComponent<avatarControls>().carrying = carried;
 				}
@@ -156,7 +134,7 @@ public class movableToolWall : MonoBehaviour
 			{
 				Destroy(boxFail);
 				
-				if (Input.GetKeyDown(KeyCode.Q))
+				if (player.GetComponent<avatarInputs>().actionQ)
 				{
 					drop();
 					carried = false;
