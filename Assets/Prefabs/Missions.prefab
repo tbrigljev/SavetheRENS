@@ -217,8 +217,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missions:
-  - {fileID: 8604442708708393463, guid: c5e8dfb950ea0ea42b1504dbca18629b, type: 3}
-  - {fileID: 8930316168523302697, guid: 2aaa18b6405332242819866426d85b0a, type: 3}
+  - {fileID: 6151155968799748015, guid: 463773acef22dff42a34fa7ed7791fc8, type: 3}
+  - {fileID: 7357342434071876532, guid: 94ca62b876157d24a8ba40876cacf432, type: 3}
   - {fileID: 1301497226345627995, guid: 73c49cd6ca1dd5e49b9dbaf388aeb814, type: 3}
   minTime: 3
   maxTime: 5

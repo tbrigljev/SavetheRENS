@@ -248,7 +248,7 @@ public class globalModifiers : MonoBehaviour
 			}
 		}
 		
-		if (!paused)
+		if (!paused && !gameOver)
 		{
 			gameTimer += Time.deltaTime;
 			gameTime = (int) gameTimer;

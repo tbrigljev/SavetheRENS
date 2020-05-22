@@ -61,7 +61,7 @@ public class missionsPickup : MonoBehaviour
 	GameObject findClosestPlayer()
 	{
 		players = GameObject.FindGameObjectsWithTag("Player");		
-    currentDistanceToPlayers = 200f;
+    currentDistanceToPlayers = 400f;
 		
     foreach (GameObject player in players)
      {
