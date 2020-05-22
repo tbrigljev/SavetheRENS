@@ -33,13 +33,13 @@ public class globalModifiers : MonoBehaviour
 	private int gameTime;
 	private int gameTimeSeconds;
 	private int gameTimeMinutes;
-	private int currentScreen;
 	private int maxButtons;
 	private int minButtons;
 	private int quitButton;
 	private int endButton;
 	
 	public int selectedButton;
+	public int currentScreen;
 	
 	private string textTotalPoints;
 	private string textCurrentTime;
@@ -68,7 +68,7 @@ public class globalModifiers : MonoBehaviour
 		gameOver = false;
 		
 		totalPoints = 0;
-		pointsTarget = 4;
+		pointsTarget = 12;
 		newPoints = 0;
 		filedMissions = 0;
 		textTotalPoints = "Points: " + totalPoints;		
@@ -90,9 +90,9 @@ public class globalModifiers : MonoBehaviour
 		
 		gameTimer = 0f;
 		gameTime = 0;
-		textCurrentTime = "Time: " + gameTime.ToString("00") + ":" + gameTime.ToString("00");
+		textCurrentTime = gameTime.ToString("00") + ":" + gameTime.ToString("00");
 		objectCurrentTime = GameObject.Find("GameInfoTime");
-		objectCurrentTime.GetComponent<TextMesh>().text = textCurrentTime;
+		objectCurrentTime.GetComponent<TextMesh>().text = "Time: " + textCurrentTime;
 		
 		backEndButton = GameObject.Find("ButtonBackEndScreen");
 		backEndButton.SetActive(false);
@@ -261,8 +261,8 @@ public class globalModifiers : MonoBehaviour
 		
 			gameTimeMinutes = gameTime / 60;
 			gameTimeSeconds = gameTime - gameTimeMinutes*60;
-			textCurrentTime = "Time: " + gameTimeMinutes.ToString("00") + ":" + gameTimeSeconds.ToString("00");
-			objectCurrentTime.GetComponent<TextMesh>().text = textCurrentTime;
+			textCurrentTime = gameTimeMinutes.ToString("00") + ":" + gameTimeSeconds.ToString("00");
+			objectCurrentTime.GetComponent<TextMesh>().text = "Time: " + textCurrentTime;
 		
 			if ((totalPoints + newPoints) > totalPoints)
 			{

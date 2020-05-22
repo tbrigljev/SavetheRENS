@@ -113,7 +113,7 @@ public class mainMenu : MonoBehaviour
 						break;
 					case 3:
 						Debug.Log("Exit game");
-						 UnityEditor.EditorApplication.isPlaying = false;
+						//UnityEditor.EditorApplication.isPlaying = false;
 						Application.Quit();
 						break;
 					default:

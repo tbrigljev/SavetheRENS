@@ -13,6 +13,7 @@ public class selectColorPauseMenu : MonoBehaviour
 	private GameObject text;
 	
 	private int count;
+	private int currentScreen;
 	
 	private bool gameOver;
 	
@@ -23,6 +24,7 @@ public class selectColorPauseMenu : MonoBehaviour
 		menuPauseButtons = GameObject.Find("Global");
 		selectedButton = menuPauseButtons.GetComponent<globalModifiers>().selectedButton;
 		gameOver = menuPauseButtons.GetComponent<globalModifiers>().gameOver;
+		currentScreen = menuPauseButtons.GetComponent<globalModifiers>().currentScreen;
 			
 		background = transform.Find("Background").gameObject;
 		background.GetComponent<Image>().color = menuPauseButtons.GetComponent<globalModifiers>().backgroundDefault;
@@ -73,8 +75,16 @@ public class selectColorPauseMenu : MonoBehaviour
 		}	
 		else
 		{
-			background.GetComponent<Image>().color = menuPauseButtons.GetComponent<globalModifiers>().backgroundDefault;
-			text.GetComponent<Text>().color = menuPauseButtons.GetComponent<globalModifiers>().textDefault;
+			if (currentScreen == 2)
+			{
+				background.GetComponent<Image>().color = menuPauseButtons.GetComponent<globalModifiers>().textDefault;
+				text.GetComponent<Text>().color = menuPauseButtons.GetComponent<globalModifiers>().backgroundDefault;
+			}
+			else
+			{
+				background.GetComponent<Image>().color = menuPauseButtons.GetComponent<globalModifiers>().backgroundDefault;
+				text.GetComponent<Text>().color = menuPauseButtons.GetComponent<globalModifiers>().textDefault;
+			}
 		}
 	}
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class acionComplete : MonoBehaviour
+public class actionComplete : MonoBehaviour
 {
   public float destroyTime = 1f;
 		
