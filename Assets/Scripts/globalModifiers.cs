@@ -129,7 +129,7 @@ public class globalModifiers : MonoBehaviour
 				objectEndScreen.SetActive(true);
 				backEndButton.SetActive(true);
 
-				objectEndScreenTime.GetComponent<Text>().text = "Level completed in " + textCurrentTime;
+				objectEndScreenTime.GetComponent<Text>().text = "Level completed in: " + textCurrentTime;
 				objectEndScreenPoints.GetComponent<Text>().text = "Total points: " + totalPoints;
 				objectEndScreenMissions.GetComponent<Text>().text = "Total missions: " + filedMissions;
 				
