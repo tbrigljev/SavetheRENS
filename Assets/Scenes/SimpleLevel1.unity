@@ -97,15 +97,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
-    agentHeight: 2
+    agentRadius: 0.1
+    agentHeight: 0.1
     agentSlope: 45
     agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.033333335
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -334,6 +334,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1452775163}
     m_Modifications:
+    - target: {fileID: 114072312661234526, guid: 274c4f0b0acde7543aba06e209753cd4,
+        type: 3}
+      propertyPath: positions.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114072312661234526, guid: 274c4f0b0acde7543aba06e209753cd4,
+        type: 3}
+      propertyPath: positions.Array.data[0].position.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8020826114589784472, guid: 274c4f0b0acde7543aba06e209753cd4,
         type: 3}
       propertyPath: m_Mesh
@@ -362,7 +372,7 @@ PrefabInstance:
     - target: {fileID: 8020826114594957540, guid: 274c4f0b0acde7543aba06e209753cd4,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.38268343
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8020826114594957540, guid: 274c4f0b0acde7543aba06e209753cd4,
         type: 3}
@@ -372,7 +382,7 @@ PrefabInstance:
     - target: {fileID: 8020826114594957540, guid: 274c4f0b0acde7543aba06e209753cd4,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.92387956
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8020826114594957540, guid: 274c4f0b0acde7543aba06e209753cd4,
         type: 3}
@@ -387,7 +397,7 @@ PrefabInstance:
     - target: {fileID: 8020826114594957540, guid: 274c4f0b0acde7543aba06e209753cd4,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8020826114594957540, guid: 274c4f0b0acde7543aba06e209753cd4,
         type: 3}
@@ -398,6 +408,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cardinal
+      objectReference: {fileID: 0}
+    - target: {fileID: 8020826114594993348, guid: 274c4f0b0acde7543aba06e209753cd4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8020826114594993348, guid: 274c4f0b0acde7543aba06e209753cd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Birds
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 274c4f0b0acde7543aba06e209753cd4, type: 3}
@@ -2166,6 +2186,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robin
       objectReference: {fileID: 0}
+    - target: {fileID: 7344193626883266269, guid: d82169bc87ac99d4582bcd74dbfe9a1d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344193626883266269, guid: d82169bc87ac99d4582bcd74dbfe9a1d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Birds
+      objectReference: {fileID: 0}
     - target: {fileID: 7344193626883689213, guid: d82169bc87ac99d4582bcd74dbfe9a1d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2525,7 +2555,7 @@ PrefabInstance:
     - target: {fileID: 3845436066040433528, guid: 4a1dfcd8467c3c7478dcb62bcc5d4550,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 3845436066040433528, guid: 4a1dfcd8467c3c7478dcb62bcc5d4550,
         type: 3}
@@ -2571,6 +2601,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: avatarPCi
+      objectReference: {fileID: 0}
+    - target: {fileID: 3845436066040862555, guid: 4a1dfcd8467c3c7478dcb62bcc5d4550,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a1dfcd8467c3c7478dcb62bcc5d4550, type: 3}
@@ -4574,6 +4609,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7081489867725391706, guid: 0f47edf985bdacf42b287278f8bd5ea7,
+        type: 3}
+      propertyPath: Mute
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7081489867725391706, guid: 0f47edf985bdacf42b287278f8bd5ea7,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f47edf985bdacf42b287278f8bd5ea7, type: 3}
 --- !u!1001 &1238842280
@@ -4642,6 +4687,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GoldFinch
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243401732796492127, guid: 208b7898b83c2844a9a7a7d4c9ae173b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243401732796492127, guid: 208b7898b83c2844a9a7a7d4c9ae173b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Birds
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 208b7898b83c2844a9a7a7d4c9ae173b, type: 3}
@@ -5507,6 +5562,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sparrow
       objectReference: {fileID: 0}
+    - target: {fileID: 6124617603665185852, guid: 21b5f5d32fee5f84caccbfd74551a323,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6124617603665185852, guid: 21b5f5d32fee5f84caccbfd74551a323,
+        type: 3}
+      propertyPath: m_TagString
+      value: Birds
+      objectReference: {fileID: 0}
     - target: {fileID: 6124617603665547292, guid: 21b5f5d32fee5f84caccbfd74551a323,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5905,6 +5970,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chickadee
       objectReference: {fileID: 0}
+    - target: {fileID: 73940026719720181, guid: b4a8d528fd7ce6f46b15a9861a9150ed,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 73940026719720181, guid: b4a8d528fd7ce6f46b15a9861a9150ed,
+        type: 3}
+      propertyPath: m_TagString
+      value: Birds
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4a8d528fd7ce6f46b15a9861a9150ed, type: 3}
 --- !u!1 &1625629744
@@ -6043,6 +6118,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BlueJay
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224674029896983575, guid: fbdbd0542894b9a4d894552a41c0f655,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224674029896983575, guid: fbdbd0542894b9a4d894552a41c0f655,
+        type: 3}
+      propertyPath: m_TagString
+      value: Birds
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbdbd0542894b9a4d894552a41c0f655, type: 3}
@@ -6573,10 +6658,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9121987227298174558, guid: d848ef981522da241805f8b1f4a9008d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9121987227681536709, guid: d848ef981522da241805f8b1f4a9008d,
         type: 3}
       propertyPath: Mute
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9121987227681536709, guid: d848ef981522da241805f8b1f4a9008d,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 9121987227681536710, guid: d848ef981522da241805f8b1f4a9008d,
         type: 3}

@@ -108,6 +108,7 @@ public class missionsPickup : MonoBehaviour
 			{
 				yeet();
 				GetComponent<Rigidbody>().AddForce(player.transform.forward * thrust, ForceMode.Impulse);
+				GetComponent<Rigidbody>().AddForce(Vector3.up * thrust/1.5f, ForceMode.Impulse);
 				carried = false;
 				player.GetComponent<avatarControls>().inMission = carried;
 			}
