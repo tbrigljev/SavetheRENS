@@ -10,6 +10,7 @@ public class fileMission : MonoBehaviour
 	private GameObject closestPlayer;	
 	private GameObject boxReady;
 	private GameObject globalModifiers;
+	private GameObject missions;
 	
 	private Vector3 raycastOffset  = new Vector3(0, 2, 0);
 	
@@ -49,6 +50,8 @@ public class fileMission : MonoBehaviour
 		boxReady = null;
 		player = null;
 		closestPlayer = null;
+		
+		missions = GameObject.Find("Missions");
 		
 		globalModifiers = GameObject.Find("Global");
 		completeMissionsModifier = globalModifiers.GetComponent<globalModifiers>().completeMissionsModifier;
@@ -123,6 +126,7 @@ public class fileMission : MonoBehaviour
 					Destroy(player.transform.Find("currentMission").gameObject);	
 					globalModifiers.GetComponent<globalModifiers>().filedMissions += 1;
 					globalModifiers.GetComponent<globalModifiers>().newPoints += 5;
+					missions.GetComponent<missionSpawner>().missionCount -= 1;
 					cooldown = true;
 					Destroy(boxReady);
 					player.GetComponent<avatarControls>().inMission = false;

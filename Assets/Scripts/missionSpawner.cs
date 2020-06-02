@@ -49,7 +49,7 @@ public class missionSpawner : MonoBehaviour
 		shakeAmount = 0.01f;
 		
 		readyParticles = GetComponentInChildren<ParticleSystem>();
-		spawnerMessage = "Waiting on new missions!";
+		//spawnerMessage = "Waiting on new missions!";
 		
 		newMissionSound = gameObject.GetComponent<AudioSource>();
 		
@@ -64,6 +64,7 @@ public class missionSpawner : MonoBehaviour
 
   void Update()
   {
+		/*
 		missionCountText.GetComponent<Text>().text = spawnerMessage;
 		
 		if (missionCount > 0)
@@ -78,6 +79,7 @@ public class missionSpawner : MonoBehaviour
 		{
 			spawnerMessage = "Waiting on new missions!";			
 		}
+		*/
 		
     spawnTime = Random.Range(minTime, maxTime);
 		

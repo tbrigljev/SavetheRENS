@@ -65,10 +65,10 @@ public class discardMissions : MonoBehaviour
 		
 		discardMissionSound = gameObject.GetComponent<AudioSource>();
 		
-		stationMessage = "Station ready!";
+		//stationMessage = "Station ready!";
 		
-		progressText = GameObject.Find("GlobalInteract");
-		missionDiscardProgress = progressText.GetComponent<Text>();
+		//progressText = GameObject.Find("GlobalInteract");
+		//missionDiscardProgress = progressText.GetComponent<Text>();
   }
 	
 	GameObject findClosestPlayer()
@@ -117,7 +117,7 @@ public class discardMissions : MonoBehaviour
 			maxTimeCooldown /= completeMissionsModifier;
 		}
 		
-		missionDiscardProgress.text = stationMessage;
+		//missionDiscardProgress.text = stationMessage;
 		
 		if ((readyForMission) && (!cooldown))
 		{
@@ -132,13 +132,13 @@ public class discardMissions : MonoBehaviour
 				{
 					time += Time.deltaTime;
 					progress = time/maxTimeComplete;
-					stationMessage = "Progress: " + Mathf.Round(Mathf.Round(progress*100)/10)*10 + "%";
+					//stationMessage = "Progress: " + Mathf.Round(Mathf.Round(progress*100)/10)*10 + "%";
 					progressBar.fillAmount = progress;
 				}
 				else if (time > maxTimeComplete)
 				{
 					Destroy(player.transform.Find("currentMission").gameObject);					
-					stationMessage = "Discard completed!";
+					//stationMessage = "Discard completed!";
 					missions.GetComponent<missionSpawner>().missionCount -= 1;
 					cooldown = true;
 					Destroy(boxReady);
@@ -161,13 +161,13 @@ public class discardMissions : MonoBehaviour
 			{
 				time -= Time.deltaTime;
 				progress = time/maxTimeCooldown;				
-				stationMessage = "Station in cooldown: " + Mathf.Round(Mathf.Round(progress*100)/10)*10 + "%";
+				//stationMessage = "Station in cooldown: " + Mathf.Round(Mathf.Round(progress*100)/10)*10 + "%";
 				cooldownBar.fillAmount = progress;
 			}
 			else
 			{
 				Destroy(boxReady);
-				stationMessage = "Station ready!";
+				//stationMessage = "Station ready!";
 				cooldownBar.fillAmount = 0f;
 				cooldown = false;
 			}
@@ -178,7 +178,7 @@ public class discardMissions : MonoBehaviour
 			{
 				time = 0f;
 				Destroy(boxReady);
-				stationMessage = "Station ready!";
+				//stationMessage = "Station ready!";
 			}
 		}
     Debug.DrawRay(transform.position + raycastOffset, transform.forward*rayLength, Color.blue);

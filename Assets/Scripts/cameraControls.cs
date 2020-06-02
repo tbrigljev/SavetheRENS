@@ -10,14 +10,16 @@ public class cameraControls : MonoBehaviour
 		private Vector3 cameraPosition;
 		private float limitRight;
 		private float limitLeft;
-		private float limitZ;
+		private float limitUp;
+		private float limitDown;
 
     void Start()
     {
       offset = transform.position - player.transform.position;
-			limitRight = 1.5f;
-			limitLeft = -9.6f;
-			limitZ = 4.5f;
+			limitRight = 2f;
+			limitLeft = -10f;
+			limitUp = 2f;
+			limitDown = 4.5f;
     }
  
     void LateUpdate()
@@ -26,7 +28,8 @@ public class cameraControls : MonoBehaviour
 			
 			cameraPosition.x = (cameraPosition.x > limitRight) ? limitRight : cameraPosition.x;
 			cameraPosition.x = (cameraPosition.x < limitLeft)  ? limitLeft  : cameraPosition.x;
-			cameraPosition.z = limitZ;
+			cameraPosition.z = (cameraPosition.z < limitUp)    ? limitUp    : cameraPosition.z;
+			cameraPosition.z = (cameraPosition.z > limitDown)  ? limitDown  : cameraPosition.z;
 			
 			transform.position = cameraPosition;
     }
