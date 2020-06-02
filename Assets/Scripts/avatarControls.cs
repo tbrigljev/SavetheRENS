@@ -101,7 +101,7 @@ public class avatarControls : MonoBehaviour
 				time = 0f;
 				int index = Random.Range(0, footStepsSounds.Length);
 				footSteps.clip = footStepsSounds[index];
-        footSteps.Play ();
+        footSteps.Play();
 			}
 			
 			if (movement != Vector3.zero)

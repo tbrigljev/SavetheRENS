@@ -12,7 +12,8 @@ public class fileMission : MonoBehaviour
 	private GameObject globalModifiers;
 	private GameObject missions;
 	
-	private Vector3 raycastOffset  = new Vector3(0, 2, 0);
+	private Vector3 raycastOffset = new Vector3(0, 2, 0);
+	private Vector3 popupOffset = new Vector3(0, 0, 0.2f);
 	
 	public GameObject boxReadyPrefab;
 	public GameObject boxCooldownPrefab;
@@ -36,6 +37,7 @@ public class fileMission : MonoBehaviour
 	
 	public Image progressBar;
 	public Image cooldownBar;
+	public GameObject fileCompletePrefab;
 	
   void Start()
   {
@@ -110,7 +112,7 @@ public class fileMission : MonoBehaviour
 		{
 			if (boxReady == null)
 			{
-				boxReady = Instantiate(boxReadyPrefab, transform.position, transform.rotation);
+				boxReady = Instantiate(boxReadyPrefab, transform.position, transform.rotation, transform);
 			}
 			
 			if (player.GetComponent<avatarInputs>().actionR)
@@ -131,6 +133,7 @@ public class fileMission : MonoBehaviour
 					Destroy(boxReady);
 					player.GetComponent<avatarControls>().inMission = false;
 					
+					showCompleteFile();
 					fileMissionSound.Play();
 				}
 			}
@@ -165,5 +168,11 @@ public class fileMission : MonoBehaviour
 			}
 		}
     Debug.DrawRay(transform.position + raycastOffset, transform.forward*rayLength, Color.blue);
+	}
+	
+	void showCompleteFile()
+	{
+		//var rot = transform.eulerAngles + 180f * Vector3.up;
+		Instantiate(fileCompletePrefab, transform.position+popupOffset, transform.rotation, transform);		
 	}
 }

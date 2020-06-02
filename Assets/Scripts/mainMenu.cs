@@ -46,7 +46,7 @@ public class mainMenu : MonoBehaviour
 		textStartUp = GameObject.Find("TextStartUp");
 		textStartUp.SetActive(true);
 		menuButtons = GameObject.Find("Buttons");
-		menuButtons.SetActive(false);
+		menuButtons.SetActive(false);			
 	}
 	
 	void Update()
