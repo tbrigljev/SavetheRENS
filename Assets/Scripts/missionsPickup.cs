@@ -21,9 +21,6 @@ public class missionsPickup : MonoBehaviour
 	private bool playerCarrying;
 	private bool playerInMission;
 	
-	public int totalPoints;
-	public int currentPoints;
-	
 	private float rangeEyes;	
 	private float rangeFloor;
 	public float thrust;
@@ -42,9 +39,6 @@ public class missionsPickup : MonoBehaviour
 		rangeEyes = 2f;
 		rangeFloor = 1.2f;
 		thrust = 10f;
-		
-		totalPoints = 10;
-		currentPoints = 0;
 		
 		carried = false;
 		playerCarrying = false;

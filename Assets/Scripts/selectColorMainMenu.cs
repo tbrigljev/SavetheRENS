@@ -12,14 +12,10 @@ public class selectColorMainMenu : MonoBehaviour
 	private GameObject background;
 	private GameObject text;
 	
-	private int count;
-	
 	public bool first;
 	
     void Start()
-    {
-			count = 0;
-			
+    {			
 			first = false;
 			
 			menuButtons = GameObject.Find("MainMenuButtons");

@@ -18,7 +18,6 @@ public class movableToolFurniture : MonoBehaviour
 	
 	public float range;
 	public float distance;
-	public float boxFailOffset;
 	
 	private bool allowed;
 	private bool carried;
@@ -74,7 +73,7 @@ public class movableToolFurniture : MonoBehaviour
 		{
 			if (player.GetComponent<avatarInputs>().actionQ)
 			{
-				Debug.Log("Q used to move furniture");
+				//Debug.Log("Q used to move furniture");
 				if ((player.transform.position - transform.position).sqrMagnitude < range*range)
 				{
 					carried = true;

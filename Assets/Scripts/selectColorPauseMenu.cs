@@ -11,16 +11,12 @@ public class selectColorPauseMenu : MonoBehaviour
 	
 	private GameObject background;
 	private GameObject text;
-	
-	private int count;
 	private int currentScreen;
 	
 	private bool gameOver;
 	
   void Start()
-  {
-		count = 0;
-		
+  {		
 		menuPauseButtons = GameObject.Find("Global");
 		selectedButton = menuPauseButtons.GetComponent<globalModifiers>().selectedButton;
 		gameOver = menuPauseButtons.GetComponent<globalModifiers>().gameOver;

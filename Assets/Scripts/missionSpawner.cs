@@ -11,6 +11,23 @@ public class missionSpawner : MonoBehaviour
 	private GameObject missionCountText;
 	private GameObject globalModifiers;
 	
+	private int numberOfTasks;
+	private string[] missionAllTags = new string[] {
+		"map",
+		"tab",
+		"shelf"
+	};
+	private string lastTag = "file";
+	public List<string> missionTags = new List<string>();
+	
+	private int[] missionAllPoints = new int[] {
+		2,
+		5,
+		8,
+		10
+	};
+	public List<int> missionPoints = new List<int>();
+	
 	private ParticleSystem readyParticles;
 	
 	private float time;
@@ -27,6 +44,7 @@ public class missionSpawner : MonoBehaviour
 	public int missionCount;
 	public int missionMax;
 	public int allMissions;
+	public int maxTasks;
 	
 	private string spawnerMessage;
 	
@@ -38,6 +56,7 @@ public class missionSpawner : MonoBehaviour
 	
   void Start()
   {
+		numberOfTasks = 0;
 		missionCount = 0;
 		missionMax = 3;
 		allMissions = 0;
@@ -47,6 +66,7 @@ public class missionSpawner : MonoBehaviour
 		maxTime = 5f;
 		shakeSpeed = 20f;
 		shakeAmount = 0.01f;
+		maxTasks = 4;
 		
 		readyParticles = GetComponentInChildren<ParticleSystem>();
 		//spawnerMessage = "Waiting on new missions!";
@@ -110,6 +130,21 @@ public class missionSpawner : MonoBehaviour
 				}
 				mission = Instantiate(missions[missionType], spawnPosition, gameObject.transform.rotation);				
 				mission.name = "missionReady" + missionCount.ToString();
+				
+				numberOfTasks = Random.Range(1, maxTasks);
+				//Debug.Log("Number of tasks: " + numberOfTasks);
+				missionTags.Clear();
+				missionPoints.Clear();
+				for (int i = 0; i < numberOfTasks; i++)
+				{
+					//Debug.Log("Filling the list, step " + i);
+					missionTags.Add(missionAllTags[Random.Range(0, missionAllTags.Length)]);
+					//Debug.Log("Adding tag: " + missionTags[i]);
+					missionPoints.Add(missionAllPoints[Random.Range(0, missionAllPoints.Length)]);
+					//Debug.Log("Adding points: " + missionPoints[i]);
+				}
+				missionTags.Add(lastTag);
+				missionPoints.Add(1);
 			}
 			time = 0f;
 		}

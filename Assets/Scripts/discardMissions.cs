@@ -10,7 +10,6 @@ public class discardMissions : MonoBehaviour
 	private GameObject closestPlayer;	
 	private GameObject boxReady;
 	private GameObject missions;
-	private GameObject progressText;	
 	private GameObject globalModifiers;
 	
 	private Vector3 raycastOffset  = new Vector3(0, 2, 0);
@@ -64,11 +63,6 @@ public class discardMissions : MonoBehaviour
 		cooldownMissionsModifier = globalModifiers.GetComponent<globalModifiers>().cooldownMissionsModifier;
 		
 		discardMissionSound = gameObject.GetComponent<AudioSource>();
-		
-		//stationMessage = "Station ready!";
-		
-		//progressText = GameObject.Find("GlobalInteract");
-		//missionDiscardProgress = progressText.GetComponent<Text>();
   }
 	
 	GameObject findClosestPlayer()
@@ -178,6 +172,7 @@ public class discardMissions : MonoBehaviour
 			{
 				time = 0f;
 				Destroy(boxReady);
+				progressBar.fillAmount = 0f;
 				//stationMessage = "Station ready!";
 			}
 		}

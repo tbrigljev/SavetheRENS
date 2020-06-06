@@ -29,6 +29,7 @@ public class fileMission : MonoBehaviour
 	private float progress;
 	public float maxTimeComplete;
 	public float maxTimeCooldown;
+	private float totalPoints;
 	
 	private bool readyForMission;
 	private bool cooldown;
@@ -127,7 +128,8 @@ public class fileMission : MonoBehaviour
 				{
 					Destroy(player.transform.Find("currentMission").gameObject);	
 					globalModifiers.GetComponent<globalModifiers>().filedMissions += 1;
-					globalModifiers.GetComponent<globalModifiers>().newPoints += 5;
+					totalPoints = player.transform.Find("currentMission").gameObject.GetComponent<missionsTracking>().totalPoints;
+					globalModifiers.GetComponent<globalModifiers>().newPoints += (int) Mathf.Round(totalPoints*1.2f);
 					missions.GetComponent<missionSpawner>().missionCount -= 1;
 					cooldown = true;
 					Destroy(boxReady);
@@ -155,7 +157,6 @@ public class fileMission : MonoBehaviour
 			else
 			{
 				Destroy(boxReady);
-				cooldownBar.fillAmount = 0f;
 				cooldown = false;
 			}
 		}
@@ -165,6 +166,7 @@ public class fileMission : MonoBehaviour
 			{
 				time = 0f;
 				Destroy(boxReady);
+				progressBar.fillAmount = 0f;
 			}
 		}
     Debug.DrawRay(transform.position + raycastOffset, transform.forward*rayLength, Color.blue);

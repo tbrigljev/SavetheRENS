@@ -73,18 +73,17 @@ public class avatarControls : MonoBehaviour
 				minZ = -9;
 				maxZ = -0.8f;				
 				minMiddle = -10f;
-				maxMiddle = -8f;
+				maxMiddle = -7.8f;
 			}
 			else
 			{			
 				minX = -14.8f;
-				maxX = 5.8f;
-				minZ = -8.8f;				
+				maxX = 5.7f;
+				minZ = -8.6f;				
 				minMiddle = -10.2f;
-				maxMiddle = -7.8f;
+				maxMiddle = -7.7f;
 			}
 			
-			/*
 			if ((newPosition.z < -4f) && ((newPosition.x < maxMiddle) && (newPosition.x > minMiddle)))
 			{
 				newPosition.x = (newPosition.x > -8.85f) ? maxMiddle : minMiddle;
@@ -93,7 +92,7 @@ public class avatarControls : MonoBehaviour
 			newPosition.x = (newPosition.x > maxX) ? maxX : newPosition.x;
 			newPosition.x = (newPosition.x < minX) ? minX : newPosition.x;
 			newPosition.z = (newPosition.z > maxZ) ? maxZ : newPosition.z;
-			newPosition.z = (newPosition.z < minZ) ? minZ : newPosition.z;*/
+			newPosition.z = (newPosition.z < minZ) ? minZ : newPosition.z;
 			newPosition.y = 0;
 			
 			time += Time.deltaTime;

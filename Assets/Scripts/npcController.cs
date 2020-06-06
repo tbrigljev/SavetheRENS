@@ -45,7 +45,6 @@ public class npcController : MonoBehaviour
 	
 	private Quaternion lookRotation;
 	
-	private float rand;
 	private float time;
 	private float waitTime;
 	private float timerStuck;
@@ -59,8 +58,6 @@ public class npcController : MonoBehaviour
 	void Start()
 	{
 		agent = GetComponent<NavMeshAgent>();
-		
-		rand = 0f;
 		
 		switch (gameObject.name)
 		{

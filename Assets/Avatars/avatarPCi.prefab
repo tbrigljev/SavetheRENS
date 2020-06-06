@@ -322,6 +322,7 @@ GameObject:
   - component: {fileID: 7735576280912535128}
   - component: {fileID: 3845436064455222679}
   - component: {fileID: 114904983337852350}
+  - component: {fileID: 114367855350467842}
   - component: {fileID: 3845436066040862555}
   m_Layer: 0
   m_Name: avatarPCi
@@ -426,6 +427,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e40959b39fdd0348972a60c832b840d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionQ: 0
+  actionE: 0
+  actionR: 0
+  actionT: 0
+--- !u!114 &114367855350467842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3845436066040862552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e797528c7fc61d846ae01f99a1fd7373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!82 &3845436066040862555

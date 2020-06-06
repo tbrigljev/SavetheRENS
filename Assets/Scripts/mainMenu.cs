@@ -23,13 +23,10 @@ public class mainMenu : MonoBehaviour
 	private bool waitMenu;
 	private bool waitButtons;
 	
-	private float timeVar;
-	
 	void Start()
 	{
 		time = 0f;
 		waitTime = 1f;
-		timeVar = 0f;
 		selectedButton = 0;
 		maxButtons = 3;
 		
