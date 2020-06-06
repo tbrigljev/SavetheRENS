@@ -10,10 +10,14 @@ public class shelfMission : MonoBehaviour
 	private GameObject closestPlayer;	
 	private GameObject boxReady;
 	private GameObject globalModifiers;
+	//--//
+	private GameObject canvas;
+	private Vector3 lookAtPoint;
 	
 	private string identifier = "shelf";
 	
 	private Vector3 raycastOffset = new Vector3(0, 2, 0);
+	private Quaternion canvasAngle;
 	
 	public GameObject boxReadyPrefab;
 	public GameObject boxCooldownPrefab;
@@ -33,16 +37,33 @@ public class shelfMission : MonoBehaviour
 	private bool readyForMission;
 	private bool cooldown;
 	
-	//private AudioSource fileMissionSound;
+	//private AudioSource shelfMissionSound;
 	
 	public Image progressBar;
 	public Image cooldownBar;
-	//public GameObject fileCompletePrefab;	
+	public GameObject shelfCompletePrefab;	
 	
 	private bool taskDone;
 	
   void Start()
 	{
+		//--//
+		lookAtPoint.y = transform.position.y + 10;
+		switch (transform.eulerAngles.y % 180)
+		{
+			case 0:
+				lookAtPoint.x = transform.position.x;
+				lookAtPoint.z = transform.position.z + 4;
+				break;
+			default:
+				lookAtPoint.x = (transform.position.x > 0) ? transform.position.x - 4 : transform.position.x + 4;	
+				lookAtPoint.z = transform.position.z;
+				break;			
+		}
+		canvas = transform.Find("Canvas").gameObject;
+		canvas.transform.LookAt(lookAtPoint);
+		canvasAngle = canvas.transform.rotation;
+		
 		rayLength = 3f;
 		time = 0f;
 		maxTimeComplete = 2f;
@@ -59,7 +80,7 @@ public class shelfMission : MonoBehaviour
 		completeMissionsModifier = globalModifiers.GetComponent<globalModifiers>().completeMissionsModifier;
 		cooldownMissionsModifier = globalModifiers.GetComponent<globalModifiers>().cooldownMissionsModifier;
 		
-		//fileMissionSound = gameObject.GetComponent<AudioSource>();
+		//shelfMissionSound = gameObject.GetComponent<AudioSource>();
   }
 	
 	GameObject findClosestPlayer()
@@ -85,6 +106,7 @@ public class shelfMission : MonoBehaviour
 		
 		RaycastHit hit;
 		Physics.Raycast(transform.position + raycastOffset, transform.forward, out hit, rayLength*100);
+		
 		if ((hit.collider.gameObject.name == player.name) && (player.GetComponent<avatarControls>().inMission) && (hit.distance < rayLength) && (player.GetComponent<avatarMissions>().currentTag == identifier))
 		{
 			readyForMission = true;
@@ -97,6 +119,9 @@ public class shelfMission : MonoBehaviour
 	
 	void Update()
 	{
+		//--//
+		canvas.transform.LookAt(lookAtPoint);
+		
 		if (completeMissionsModifier != globalModifiers.GetComponent<globalModifiers>().completeMissionsModifier)
 		{
 			completeMissionsModifier = globalModifiers.GetComponent<globalModifiers>().completeMissionsModifier;
@@ -129,7 +154,8 @@ public class shelfMission : MonoBehaviour
 					cooldown = true;
 					Destroy(boxReady);
 					
-					//fileMissionSound.Play();
+					showCompleteShelf();
+					//shelfMissionSound.Play();
 				}
 			}
 		}
@@ -163,5 +189,11 @@ public class shelfMission : MonoBehaviour
 			}
 		}
     Debug.DrawRay(transform.position + raycastOffset, transform.forward*rayLength, Color.blue);
+	}
+	
+	void showCompleteShelf()
+	{
+		//var rot = transform.eulerAngles + 180f * Vector3.up;
+		Instantiate(shelfCompletePrefab, transform.position, canvasAngle, transform);		
 	}
 }

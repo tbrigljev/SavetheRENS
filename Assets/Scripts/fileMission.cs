@@ -12,8 +12,12 @@ public class fileMission : MonoBehaviour
 	private GameObject globalModifiers;
 	private GameObject missions;
 	
+	private GameObject canvas;
+	private Vector3 lookAtPoint;
+	
 	private Vector3 raycastOffset = new Vector3(0, 2, 0);
 	private Vector3 popupOffset = new Vector3(0, 0, 0.2f);
+	private Quaternion canvasAngle;
 	
 	public GameObject boxReadyPrefab;
 	public GameObject boxCooldownPrefab;
@@ -42,7 +46,23 @@ public class fileMission : MonoBehaviour
 	
   void Start()
   {
-		rayLength = 3f;
+		lookAtPoint.y = transform.position.y + 10;
+		switch (transform.eulerAngles.y % 180)
+		{
+			case 0:
+				lookAtPoint.x = transform.position.x;
+				lookAtPoint.z = transform.position.z + 4;
+				break;
+			default:
+				lookAtPoint.x = (transform.position.x > 0) ? transform.position.x - 4 : transform.position.x + 4;	
+				lookAtPoint.z = transform.position.z;
+				break;			
+		}
+		canvas = transform.Find("Canvas").gameObject;
+		canvas.transform.LookAt(lookAtPoint);
+		canvasAngle = canvas.transform.rotation;
+		
+		rayLength = 1.5f;
 		time = 0f;
 		maxTimeComplete = 2f;
 		maxTimeCooldown = 1f;
@@ -85,7 +105,8 @@ public class fileMission : MonoBehaviour
 		player = findClosestPlayer();
 		
 		RaycastHit hit;
-		Physics.Raycast(transform.position + raycastOffset, transform.forward, out hit, rayLength*100);
+		Physics.Raycast(transform.position + raycastOffset + transform.forward*0.5f, transform.forward, out hit, rayLength*100);
+		
 		if ((hit.collider.gameObject.name == player.name) && (player.GetComponent<avatarControls>().inMission) && (hit.distance < rayLength))
 		{
 			readyForMission = true;
@@ -175,6 +196,6 @@ public class fileMission : MonoBehaviour
 	void showCompleteFile()
 	{
 		//var rot = transform.eulerAngles + 180f * Vector3.up;
-		Instantiate(fileCompletePrefab, transform.position+popupOffset, transform.rotation, transform);		
+		Instantiate(fileCompletePrefab, transform.position+popupOffset, canvasAngle, transform);		
 	}
 }

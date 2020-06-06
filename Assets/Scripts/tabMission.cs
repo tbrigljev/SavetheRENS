@@ -11,9 +11,13 @@ public class tabMission : MonoBehaviour
 	private GameObject boxReady;
 	private GameObject globalModifiers;
 	
+	private GameObject canvas;
+	private Vector3 lookAtPoint;
+	
 	private string identifier = "tab";
 	
-	private Vector3 raycastOffset = new Vector3(0, 0, 0);
+	private Vector3 raycastOffset = new Vector3(0, -1, 0);
+	private Quaternion canvasAngle;
 	
 	public GameObject boxReadyPrefab;
 	public GameObject boxCooldownPrefab;
@@ -29,21 +33,38 @@ public class tabMission : MonoBehaviour
 	private float progress;
 	public float maxTimeComplete;
 	public float maxTimeCooldown;
+	public float boxVerticalOffset;
 	
 	private bool readyForMission;
 	private bool cooldown;
 	
-	//private AudioSource fileMissionSound;
+	//private AudioSource tabMissionSound;
 	
 	public Image progressBar;
 	public Image cooldownBar;
-	//public GameObject fileCompletePrefab;	
+	public GameObject tabCompletePrefab;	
 	
 	private bool taskDone;
 	
   void Start()
 	{
-		rayLength = 3f;
+		lookAtPoint.y = transform.position.y + 10;
+		switch (transform.eulerAngles.y % 180)
+		{
+			case 0:
+				lookAtPoint.x = transform.position.x;
+				lookAtPoint.z = transform.position.z + 4;
+				break;
+			default:
+				lookAtPoint.x = (transform.position.x > 0) ? transform.position.x - 4 : transform.position.x + 4;	
+				lookAtPoint.z = transform.position.z;
+				break;			
+		}
+		canvas = transform.Find("Canvas").gameObject;
+		canvas.transform.LookAt(lookAtPoint);
+		canvasAngle = canvas.transform.rotation;
+		
+		rayLength = 1.3f;
 		time = 0f;
 		maxTimeComplete = 2f;
 		maxTimeCooldown = 1f;
@@ -59,7 +80,7 @@ public class tabMission : MonoBehaviour
 		completeMissionsModifier = globalModifiers.GetComponent<globalModifiers>().completeMissionsModifier;
 		cooldownMissionsModifier = globalModifiers.GetComponent<globalModifiers>().cooldownMissionsModifier;
 		
-		//fileMissionSound = gameObject.GetComponent<AudioSource>();
+		//tabMissionSound = gameObject.GetComponent<AudioSource>();
   }
 	
 	GameObject findClosestPlayer()
@@ -84,7 +105,8 @@ public class tabMission : MonoBehaviour
 		player = findClosestPlayer();
 		
 		RaycastHit hit;
-		Physics.Raycast(transform.position + raycastOffset, transform.forward, out hit, rayLength*100);
+		Physics.Raycast(transform.position + raycastOffset + transform.forward*0.2f, transform.forward, out hit, rayLength*100);
+	
 		if ((hit.collider.gameObject.name == player.name) && (player.GetComponent<avatarControls>().inMission) && (hit.distance < rayLength) && (player.GetComponent<avatarMissions>().currentTag == identifier))
 		{
 			readyForMission = true;
@@ -112,7 +134,7 @@ public class tabMission : MonoBehaviour
 		{
 			if (boxReady == null)
 			{
-				boxReady = Instantiate(boxReadyPrefab, transform.position, transform.rotation, transform);
+				boxReady = Instantiate(boxReadyPrefab, transform.position + new Vector3(0, boxVerticalOffset, 0), transform.rotation, transform);
 			}
 			
 			if (player.GetComponent<avatarInputs>().actionR)
@@ -129,7 +151,8 @@ public class tabMission : MonoBehaviour
 					cooldown = true;
 					Destroy(boxReady);
 					
-					//fileMissionSound.Play();
+					showCompleteTab();
+					//tabMissionSound.Play();
 				}
 			}
 		}
@@ -138,7 +161,7 @@ public class tabMission : MonoBehaviour
 			if (boxReady == null)
 			{
 				progressBar.fillAmount = 0f;
-				boxReady = Instantiate(boxCooldownPrefab, transform.position, transform.rotation);
+				boxReady = Instantiate(boxCooldownPrefab, transform.position + new Vector3(0, boxVerticalOffset, 0), transform.rotation);
 			}
 			
 			if (time > 0f)
@@ -163,5 +186,11 @@ public class tabMission : MonoBehaviour
 			}
 		}
     Debug.DrawRay(transform.position + raycastOffset, transform.forward*rayLength, Color.blue);
+	}
+	
+	void showCompleteTab()
+	{
+		//var rot = transform.eulerAngles + 180f * Vector3.up;
+		Instantiate(tabCompletePrefab, transform.position, canvasAngle, transform);		
 	}
 }

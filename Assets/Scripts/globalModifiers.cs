@@ -68,7 +68,7 @@ public class globalModifiers : MonoBehaviour
 		gameOver = false;
 		
 		totalPoints = 0;
-		pointsTarget = 12;
+		pointsTarget = 50;
 		newPoints = 0;
 		filedMissions = 0;
 		textTotalPoints = "Points: " + totalPoints;		

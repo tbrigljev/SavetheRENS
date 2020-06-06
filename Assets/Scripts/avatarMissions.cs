@@ -6,10 +6,13 @@ using UnityEngine.UI;
 public class avatarMissions : MonoBehaviour
 {
 	private GameObject currentMission;
+	private GameObject canvas;
 	private GameObject bookIcon;
 	private GameObject mapIcon;
 	private GameObject tabIcon;
 	private GameObject fileIcon;
+	
+	public Quaternion angle;
 	
 	public string currentTag;
 	public int currentPoints;
@@ -21,10 +24,13 @@ public class avatarMissions : MonoBehaviour
 	{
 		taskDone = false;
 		
-		bookIcon = transform.Find("Canvas").gameObject.transform.Find("Book").gameObject;
-		mapIcon = transform.Find("Canvas").gameObject.transform.Find("Map").gameObject;
-		tabIcon = transform.Find("Canvas").gameObject.transform.Find("Tab").gameObject;
-		fileIcon = transform.Find("Canvas").gameObject.transform.Find("File").gameObject;
+		angle = Quaternion.Euler(40, 180, 0);
+		
+		canvas = transform.Find("Canvas").gameObject;
+		bookIcon = canvas.transform.Find("Book").gameObject;
+		mapIcon = canvas.transform.Find("Map").gameObject;
+		tabIcon = canvas.transform.Find("Tab").gameObject;
+		fileIcon = canvas.transform.Find("File").gameObject;
 		
 		bookIcon.SetActive(false);
 		mapIcon.SetActive(false);
@@ -34,6 +40,8 @@ public class avatarMissions : MonoBehaviour
 
   void Update()
 	{
+		canvas.transform.rotation = angle;
+		
 		inMission = gameObject.GetComponent<avatarControls>().inMission;		
 		if (inMission)
 		{
