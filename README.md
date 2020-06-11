@@ -18,14 +18,18 @@ The controls for playing are shown below, for keyboard, XBOX controllers and Dua
 
 ### Keyboard
 
-| Action                                              | Binding    |
-| --------------------------------------------------- | ---------- |
-| Movement                                            | Arrow keys |
-| Carry/Drop furniture tools (tables, filing cabinet) | Q          |
-| Carry/Drop missions (red/green/blue spheres)        | E          |
-| Work on mission                                     | R          |
-| Throw missions in the room                          | T          |  
+| Action                                                         | Binding    |
+| :--------------------------------------------------------------| :--------- |
+| Movement                                                       | Arrow keys |
+| Carry/Drop missions tools (tables, filing cabinet, maps, etc.) | Q          |
+| Carry/Drop missions (red/green/blue spheres)                   | E          |
+| Work on mission                                                | R          |
+| Throw missions in the room                                     | T          |  
 
 ### XBOX controller
 
+![XBOX](MediaGitHub/xbox.png)
+
 ### DualShock4 controller
+
+![DS4](MediaGitHub/ds4.png)
