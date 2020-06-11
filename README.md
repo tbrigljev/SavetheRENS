@@ -21,6 +21,7 @@ The controls for playing are shown below, for keyboard, XBOX controllers and Dua
 | Action                                                         | Binding    |
 | :--------------------------------------------------------------| :--------- |
 | Movement                                                       | Arrow keys |
+| Space                                                          | Strafe     |
 | Carry/Drop missions tools (tables, filing cabinet, maps, etc.) | Q          |
 | Carry/Drop missions (red/green/blue spheres)                   | E          |
 | Work on mission                                                | R          |
