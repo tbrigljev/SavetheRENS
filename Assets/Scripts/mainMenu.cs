@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class mainMenu : MonoBehaviour
+public class mainMenu : MonoBehaviourPunCallbacks
 {
 	private GameObject textStartUp;
 	private GameObject menuButtons;
@@ -22,7 +24,21 @@ public class mainMenu : MonoBehaviour
 	
 	private bool waitMenu;
 	private bool waitButtons;
-	
+
+
+	#region Private Serializable Fields
+
+	[Tooltip("Maximum number of players per room.")]
+	[SerializeField]
+	private byte maxPlayersPerRoom = 2;
+	#endregion
+
+	#region Private Fields
+	bool isConnecting;
+	string gameVersion = "1";
+
+	#endregion
+
 	void Start()
 	{
 		time = 0f;
@@ -103,7 +119,7 @@ public class mainMenu : MonoBehaviour
 				switch(selectedButton)
 				{
 					case 1:
-						Play();
+						Connect();
 						break;
 					case 2:
 						Debug.Log("Credits");
@@ -121,8 +137,70 @@ public class mainMenu : MonoBehaviour
 		}
 	}
 	
-	void Play()
+
+	void Awake()
 	{
-		SceneManager.LoadScene("SimpleLevel1");
+		PhotonNetwork.AutomaticallySyncScene = true;
 	}
+
+
+	#region Public Methods
+
+	public void Connect()
+	{
+
+		if (PhotonNetwork.IsConnected)
+		{
+			PhotonNetwork.JoinRandomRoom();
+		}
+		else
+		{
+			isConnecting = PhotonNetwork.ConnectUsingSettings();
+			PhotonNetwork.GameVersion = gameVersion;
+		}
+
+	}
+	#endregion
+
+
+	#region MonoBehaviourPunCallbacks CallBacks
+
+	public override void OnConnectedToMaster()
+	{
+		Debug.Log("OnConnectedToMaster called by PUN");
+		if (isConnecting)
+		{
+			PhotonNetwork.JoinRandomRoom();
+			isConnecting = false;
+		}
+	}
+
+	public override void OnDisconnected(DisconnectCause cause)
+	{
+
+		isConnecting = false;
+		Debug.LogWarningFormat("Disconnected with reason {0}", cause);
+	}
+
+	public override void OnJoinRandomFailed(short returnCode, string message)
+	{
+		Debug.Log("OnjoinRandomFailed() called by PUN, no random room available. Creating one...");
+		PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
+	}
+
+	public override void OnJoinedRoom()
+	{
+		Debug.Log("Try to join room");
+		if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+		{
+			Debug.Log("SimpleLevel1 loaded.");
+			PhotonNetwork.LoadLevel("SimpleLevel1");
+		}
+		Debug.Log("OnJoindedRoom called by PUN, client joined the room.");
+	}
+
+	#endregion
+
+
+
 }

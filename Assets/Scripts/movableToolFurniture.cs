@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class movableToolFurniture : MonoBehaviour
+using Photon.Pun;
+public class movableToolFurniture : MonoBehaviourPun
 {
 	private GameObject[] players;
 	private GameObject player;
@@ -71,15 +71,17 @@ public class movableToolFurniture : MonoBehaviour
 		
 		if (!carried && !playerCarrying && !playerInMission)
 		{
-			if (player.GetComponent<avatarInputs>().actionQ)
+			if (player.GetComponent<avatarInputs>().MovePlace)
 			{
 				//Debug.Log("Q used to move furniture");
 				if ((player.transform.position - transform.position).sqrMagnitude < range*range)
 				{
 					carried = true;
+					this.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 					player.GetComponent<avatarControls>().carrying = carried;
 					GetComponent<Rigidbody>().isKinematic = false;
 					transform.position = player.transform.position + player.transform.TransformDirection(new Vector3(0, 0, distance));
+					
 				}
 			}
 		}
@@ -91,7 +93,7 @@ public class movableToolFurniture : MonoBehaviour
 			trot.y += 180;
 			transform.rotation = Quaternion.Euler(trot);
 			
-			if (player.GetComponent<avatarInputs>().actionQ)
+			if (player.GetComponent<avatarInputs>().MovePlace)
 			{
 				drop();
 				carried = false;

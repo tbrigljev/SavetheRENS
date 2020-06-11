@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class missionsPickup : MonoBehaviour
+using Photon.Pun;
+public class missionsPickup : MonoBehaviourPun
 {
 	private GameObject[] players;
 	private GameObject player;	
 	private GameObject closestPlayer;	
 	
 	private Vector3 offsetDetect = new Vector3(0, 3, 0);
-	private Vector3 offsetCarry = new Vector3(0.6f, 1.65f, 0.2f);
+	private Vector3 offsetCarry = new Vector3(0.6f, 1.65f, 0.4f);
 	private Vector3 forceDirection = new Vector3(0, 0, 1);
 	private Vector3 latestPosition;
 	
@@ -77,7 +77,7 @@ public class missionsPickup : MonoBehaviour
 		
 		if (!carried && !playerInMission && !playerCarrying)
 		{
-			if (player.GetComponent<avatarInputs>().actionE)
+			if (player.GetComponent<avatarInputs>().PickupDrop)
 			{
 				if (((player.transform.position - transform.position).sqrMagnitude < rangeFloor*rangeFloor) ||
 						((player.transform.position + offsetDetect - transform.position).sqrMagnitude < rangeEyes*rangeEyes))
@@ -92,13 +92,13 @@ public class missionsPickup : MonoBehaviour
 		{			
 			player.GetComponent<avatarControls>().inMission = playerInMission;
 			transform.localPosition = offsetCarry;
-			if (player.GetComponent<avatarInputs>().actionE)
+			if (player.GetComponent<avatarInputs>().PickupDrop)
 			{
 				drop();
 				carried = false;				
 				player.GetComponent<avatarControls>().inMission = carried;
 			}
-			else if (player.GetComponent<avatarInputs>().actionT)
+			else if (player.GetComponent<avatarInputs>().Yeet)
 			{
 				yeet();
 				GetComponent<Rigidbody>().AddForce(player.transform.forward * thrust, ForceMode.Impulse);
@@ -119,9 +119,9 @@ public class missionsPickup : MonoBehaviour
 		
 		pickupDropMission.clip = pickupSound;
 		pickupDropMission.Play();
-
 		transform.SetParent(player.transform);
 		transform.localRotation = Quaternion.identity;
+		this.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 	}
 
 	void drop()

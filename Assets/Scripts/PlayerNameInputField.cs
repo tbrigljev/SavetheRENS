@@ -8,45 +8,68 @@ using Photon.Realtime;
 [RequireComponent(typeof(InputField))]
 public class PlayerNameInputField : MonoBehaviour
 {
-
 	#region Private Constants
-
-	const string playerNamePrefKey = "PlayerName"; 
+	const string playerNamePrefKey = "PlayerName";
+	
+	private string[] names = new string[] {
+		"Tohru",
+		"Kyoko",
+		"Arisa",
+		"Saki",
+		"Akito",
+		"Yuki",
+		"Kyo",
+		"Shigure",
+		"Kagura",
+		"Momiji",
+		"Hatori",
+		"Hatsuharu",
+		"Ayame",
+		"Kisa",
+		"Hiro",
+		"Ritsu",
+		"Isuzu",
+		"Kureno"
+	};
 	#endregion
-
-
 
 	#region MonoBehaviour CallBacks
-    void Start()
-    {
-        string defaultName = string.Empty; 
-        InputField _inputField = this.GetComponent<InputField>(); 
+  void Start()
+	{
+		string defaultName = "Choose a name !";
+		InputField _inputField = this.GetComponent<InputField>();
+		_inputField.text = defaultName;
 
-     	if(_inputField != null)
-     	{
-     		if(PlayerPrefs.HasKey(playerNamePrefKey))
-     		{
-     			defaultName = PlayerPrefs.GetString(playerNamePrefKey); 
-     			_inputField.text = defaultName; 
-     		}
-     	}
+		if(_inputField == null)
+   	{
+			if(PlayerPrefs.HasKey(playerNamePrefKey))
+   		{
+				defaultName = PlayerPrefs.GetString(playerNamePrefKey);
+				_inputField.text = names[Random.Range(0, names.Length)];
+   		}
+			else
+			{
+				_inputField.text = names[Random.Range(0, names.Length)];
+			}
+   	}
 
-     	PhotonNetwork.NickName = defaultName; 
-    }
+		PhotonNetwork.NickName = defaultName;
+  }
 	#endregion
 
-
-	#region Public Methods
-	
+	#region Public Methods	
 	public void SetPlayerName(string value)
 	{
 		if(string.IsNullOrEmpty(value))
 		{
-			Debug.LogError("Player name is null or empty !"); 
-			return; 
+			//Debug.LogError("Player name is null or empty !");
+			return;
 		}
-		PhotonNetwork.NickName = value; 
-		PlayerPrefs.SetString(playerNamePrefKey, value); 
+		else
+		{
+			PhotonNetwork.NickName = value;
+			PlayerPrefs.SetString(playerNamePrefKey, value);
+		}
 	}
 	#endregion
 }

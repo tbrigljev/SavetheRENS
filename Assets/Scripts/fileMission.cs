@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun; 
 
-public class fileMission : MonoBehaviour
+public class fileMission : MonoBehaviourPun
 {
 	private GameObject[] players;
 	private GameObject player;
@@ -64,8 +65,8 @@ public class fileMission : MonoBehaviour
 		
 		rayLength = 1.5f;
 		time = 0f;
-		maxTimeComplete = 2f;
-		maxTimeCooldown = 1f;
+		//maxTimeComplete = 2f;
+		//maxTimeCooldown = 1f;
 		
 		readyForMission = false;
 		cooldown = false;
@@ -137,7 +138,7 @@ public class fileMission : MonoBehaviour
 				boxReady = Instantiate(boxReadyPrefab, transform.position, transform.rotation, transform);
 			}
 			
-			if (player.GetComponent<avatarInputs>().actionR)
+			if (player.GetComponent<avatarInputs>().Work)
 			{
 				if (time < maxTimeComplete)
 				{
@@ -147,10 +148,11 @@ public class fileMission : MonoBehaviour
 				}
 				else if (time > maxTimeComplete)
 				{
-					Destroy(player.transform.Find("currentMission").gameObject);	
+					PhotonNetwork.Destroy(player.transform.Find("currentMission").gameObject);	
 					globalModifiers.GetComponent<globalModifiers>().filedMissions += 1;
 					totalPoints = player.transform.Find("currentMission").gameObject.GetComponent<missionsTracking>().totalPoints;
-					globalModifiers.GetComponent<globalModifiers>().newPoints += (int) Mathf.Round(totalPoints*1.2f);
+					//globalModifiers.GetComponent<globalModifiers>().newPoints += (int) (totalPoints + 1);
+					globalModifiers.GetComponent<globalModifiers>().totalPoints += (int)(totalPoints + 1);
 					missions.GetComponent<missionSpawner>().missionCount -= 1;
 					cooldown = true;
 					Destroy(boxReady);
@@ -158,6 +160,8 @@ public class fileMission : MonoBehaviour
 					
 					showCompleteFile();
 					fileMissionSound.Play();
+					
+					time = maxTimeCooldown;
 				}
 			}
 		}
@@ -172,7 +176,7 @@ public class fileMission : MonoBehaviour
 			if (time > 0f)
 			{
 				time -= Time.deltaTime;
-				progress = (time - (maxTimeComplete - maxTimeCooldown))/maxTimeCooldown;
+				progress = time/maxTimeCooldown;
 				cooldownBar.fillAmount = progress;
 			}
 			else

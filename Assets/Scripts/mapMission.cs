@@ -38,7 +38,7 @@ public class mapMission : MonoBehaviour
 	private bool readyForMission;
 	private bool cooldown;
 	
-	//private AudioSource mapMissionSound;
+	private AudioSource mapMissionSound;
 	
 	public Image progressBar;
 	public Image cooldownBar;
@@ -66,8 +66,8 @@ public class mapMission : MonoBehaviour
 		
 		rayLength = 1.3f;
 		time = 0f;
-		maxTimeComplete = 2f;
-		maxTimeCooldown = 1f;
+		//maxTimeComplete = 2f;
+		//maxTimeCooldown = 1f;
 		
 		readyForMission = false;
 		cooldown = false;
@@ -80,7 +80,7 @@ public class mapMission : MonoBehaviour
 		completeMissionsModifier = globalModifiers.GetComponent<globalModifiers>().completeMissionsModifier;
 		cooldownMissionsModifier = globalModifiers.GetComponent<globalModifiers>().cooldownMissionsModifier;
 		
-		//mapMissionSound = gameObject.GetComponent<AudioSource>();
+		mapMissionSound = gameObject.GetComponent<AudioSource>();
   }
 	
 	GameObject findClosestPlayer()
@@ -137,7 +137,7 @@ public class mapMission : MonoBehaviour
 				boxReady = Instantiate(boxReadyPrefab, transform.position + new Vector3(0, boxVerticalOffset, 0), transform.rotation, transform);
 			}
 			
-			if (player.GetComponent<avatarInputs>().actionR)
+			if (player.GetComponent<avatarInputs>().Work)
 			{
 				if (time < maxTimeComplete)
 				{
@@ -152,7 +152,9 @@ public class mapMission : MonoBehaviour
 					Destroy(boxReady);
 					
 					showCompleteMap();
-					//mapMissionSound.Play();
+					mapMissionSound.Play();
+					
+					time = maxTimeCooldown;
 				}
 			}
 		}
@@ -167,7 +169,7 @@ public class mapMission : MonoBehaviour
 			if (time > 0f)
 			{
 				time -= Time.deltaTime;
-				progress = (time - (maxTimeComplete - maxTimeCooldown))/maxTimeCooldown;
+				progress = time/maxTimeCooldown;
 				cooldownBar.fillAmount = progress;
 			}
 			else

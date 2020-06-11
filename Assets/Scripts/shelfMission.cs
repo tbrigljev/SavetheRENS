@@ -37,7 +37,7 @@ public class shelfMission : MonoBehaviour
 	private bool readyForMission;
 	private bool cooldown;
 	
-	//private AudioSource shelfMissionSound;
+	private AudioSource shelfMissionSound;
 	
 	public Image progressBar;
 	public Image cooldownBar;
@@ -66,8 +66,8 @@ public class shelfMission : MonoBehaviour
 		
 		rayLength = 3f;
 		time = 0f;
-		maxTimeComplete = 2f;
-		maxTimeCooldown = 1f;
+		//maxTimeComplete = 3f;
+		//maxTimeCooldown = 1.5f;
 		
 		readyForMission = false;
 		cooldown = false;
@@ -80,7 +80,7 @@ public class shelfMission : MonoBehaviour
 		completeMissionsModifier = globalModifiers.GetComponent<globalModifiers>().completeMissionsModifier;
 		cooldownMissionsModifier = globalModifiers.GetComponent<globalModifiers>().cooldownMissionsModifier;
 		
-		//shelfMissionSound = gameObject.GetComponent<AudioSource>();
+		shelfMissionSound = gameObject.GetComponent<AudioSource>();
   }
 	
 	GameObject findClosestPlayer()
@@ -140,7 +140,7 @@ public class shelfMission : MonoBehaviour
 				boxReady = Instantiate(boxReadyPrefab, transform.position, transform.rotation, transform);
 			}
 			
-			if (player.GetComponent<avatarInputs>().actionR)
+			if (player.GetComponent<avatarInputs>().Work)
 			{
 				if (time < maxTimeComplete)
 				{
@@ -155,7 +155,9 @@ public class shelfMission : MonoBehaviour
 					Destroy(boxReady);
 					
 					showCompleteShelf();
-					//shelfMissionSound.Play();
+					shelfMissionSound.Play();
+					
+					time = maxTimeCooldown;
 				}
 			}
 		}
@@ -170,7 +172,7 @@ public class shelfMission : MonoBehaviour
 			if (time > 0f)
 			{
 				time -= Time.deltaTime;
-				progress = (time - (maxTimeComplete - maxTimeCooldown))/maxTimeCooldown;
+				progress = time/maxTimeCooldown;
 				cooldownBar.fillAmount = progress;
 			}
 			else

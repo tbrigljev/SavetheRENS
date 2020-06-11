@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;             
 using UnityEngine.UI;
+using Photon.Pun; 
 
-public class discardMissions : MonoBehaviour
+public class discardMissions : MonoBehaviourPun
 {
 	private GameObject[] players;
 	private GameObject player;
@@ -46,8 +47,8 @@ public class discardMissions : MonoBehaviour
 	{
 		rayLength = 1.5f;
 		time = 0f;
-		maxTimeComplete = 3f;
-		maxTimeCooldown = 2f;
+		//maxTimeComplete = 3f;
+		//maxTimeCooldown = 2f;
 		
 		readyForMission = false;
 		cooldown = false;
@@ -68,7 +69,7 @@ public class discardMissions : MonoBehaviour
 	GameObject findClosestPlayer()
 	{
 		players = GameObject.FindGameObjectsWithTag("Player");		
-    currentDistanceToPlayers = 200f;
+    currentDistanceToPlayers = 600f;
 		
     foreach (GameObject player in players)
      {
@@ -120,7 +121,7 @@ public class discardMissions : MonoBehaviour
 				boxReady = Instantiate(boxReadyPrefab, transform.position, transform.rotation);
 			}
 			
-			if (player.GetComponent<avatarInputs>().actionR)
+			if (player.GetComponent<avatarInputs>().Work)
 			{
 				if (time < maxTimeComplete)
 				{
@@ -131,7 +132,8 @@ public class discardMissions : MonoBehaviour
 				}
 				else if (time > maxTimeComplete)
 				{
-					Destroy(player.transform.Find("currentMission").gameObject);					
+					//Destroy(player.transform.Find("currentMission").gameObject);	
+					PhotonNetwork.Destroy(player.transform.Find("currentMission").gameObject);
 					//stationMessage = "Discard completed!";
 					missions.GetComponent<missionSpawner>().missionCount -= 1;
 					cooldown = true;
@@ -140,6 +142,8 @@ public class discardMissions : MonoBehaviour
 					
 					showCompleteDiscard();
 					discardMissionSound.Play();
+					
+					time = maxTimeCooldown;
 				}
 			}
 		}

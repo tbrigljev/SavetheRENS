@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class movableToolWall : MonoBehaviour
+using Photon.Pun;
+public class movableToolWall : MonoBehaviourPun
 {
 	public GameObject boxFailPrefab;
 	
@@ -135,13 +135,14 @@ public class movableToolWall : MonoBehaviour
 		
 		if (!carried && !playerCarrying && !playerInMission)
 		{
-			if (player.GetComponent<avatarInputs>().actionQ)
+			if (player.GetComponent<avatarInputs>().MovePlace)
 			{
 				if ((player.transform.position - (transform.position - offset)).sqrMagnitude < range*range)
 				{
 					Physics.IgnoreCollision(col, player.GetComponent<Collider>());
 					carried = true;
 					player.GetComponent<avatarControls>().carrying = carried;
+					this.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 				}
 			}
 		}
@@ -156,7 +157,7 @@ public class movableToolWall : MonoBehaviour
 			{
 				Destroy(boxFail);
 				
-				if (player.GetComponent<avatarInputs>().actionQ)
+				if (player.GetComponent<avatarInputs>().MovePlace)
 				{
 					drop();
 					carried = false;

@@ -1,70 +1,82 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class avatarInputs : MonoBehaviour
+using Photon.Pun;
+public class avatarInputs : MonoBehaviourPun
 {
 	private GameObject objectGlobalModifiers;
-	
+
 	private bool gameOver;
-	
-  public bool actionQ;
-	public bool actionE;
-	public bool actionR;
-	public bool actionT;
-		
-  void Start()
-  {
-    actionQ = false;
-		actionE = false;
-		actionR = false;
-		actionT = false;
+
+	public bool MovePlace;
+	public bool PickupDrop;
+	public bool Work;
+	public bool Yeet;
+
+	void Start()
+	{
+		MovePlace = false;
+		PickupDrop = false;
+		Work = false;
+		Yeet = false;
 		gameOver = false;
-		
+
 		objectGlobalModifiers = GameObject.Find("Global");
-  }
-		
-  void Update()
-  {
-		gameOver = objectGlobalModifiers.GetComponent<globalModifiers>().gameOver;
-		
+	}
+
+	void Update()
+	{
+
+		//gameOver = objectGlobalModifiers.GetComponent<globalModifiers>().gameOver;
+		MovePlace = false;
+		PickupDrop = false;
+		Yeet = false;
+
+
 		if (gameOver)
 		{
-			actionQ = false;
-			actionE = false;
-			actionR = false;
-			actionT = false;
+			MovePlace = false;
+			PickupDrop = false;
+			Work = false;
+			Yeet = false;
 		}
-		
-		else
+		else if(photonView.IsMine)
 		{
-			actionQ = false;
-			actionE = false;
-			actionT = false;
-			
-			if ((!actionQ) && (Input.GetKeyDown(KeyCode.Q)))
+			if ((!MovePlace) && (Input.GetButtonDown("MovePlace")))
 			{
-				actionQ = true;
+				MovePlace = true;
 			}
-			
-			if (Input.GetKeyDown(KeyCode.E))
+			else if (Input.GetButtonUp("MovePlace"))
 			{
-				actionE = true;
+				MovePlace = false;
 			}
 
-			if (Input.GetKey(KeyCode.R))
+			if (Input.GetButtonDown("PickupDrop"))
 			{
-				actionR = true;
+				PickupDrop = true;
 			}
-			else if (Input.GetKeyUp(KeyCode.R))
+			else if (Input.GetButtonUp("PickupDrop"))
 			{
-				actionR = false;
+				PickupDrop = false;
 			}
 
-			if (Input.GetKeyDown(KeyCode.T))
+			if (Input.GetButton("Work"))
 			{
-				actionT = true;
+				Work = true;
+			}
+			else if (Input.GetButtonUp("Work"))
+			{
+				Work = false;
+			}
+
+			if (Input.GetButtonDown("Yeet"))
+			{
+				Yeet = true;
+			}
+			else if (Input.GetButtonUp("Yeet"))
+			{
+				Yeet = false;
 			}
 		}
-  }
+	}
 }

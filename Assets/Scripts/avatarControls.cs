@@ -1,12 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class avatarControls : MonoBehaviour
+using Photon.Pun;
+public class avatarControls : MonoBehaviourPun
 {
-	private GameObject globalModifiers;
-	private GameObject camera;
-	
 	private Rigidbody rb;
 	
 	public float speed;
@@ -32,7 +29,7 @@ public class avatarControls : MonoBehaviour
     void Start()
     {			
 			time = 0f;
-      speed = 10f;
+			speed = 10f;
 			rayLength = 3f;			
 			stepsTime = 0.4f;
 			turnrate = 0.15f;
@@ -43,17 +40,19 @@ public class avatarControls : MonoBehaviour
 			rb = GetComponent<Rigidbody>();
 			
 			footSteps = gameObject.GetComponent<AudioSource>();
-			
-			globalModifiers = GameObject.Find("Global");
-			speedModifier = globalModifiers.GetComponent<globalModifiers>().playerSpeedModifier;
-			
-			camera = GameObject.Find("MainCamera");
-			camera.GetComponent<cameraControls>().player = gameObject;
-    }
+		}
 
     void FixedUpdate()
     {
-      float moveX = -Input.GetAxis("Horizontal");
+			if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+			{
+				return;
+			}
+			
+			//float moveX = (Input.GetAxis("LS_h") != 0) ? -Input.GetAxis("LS_h") : -Input.GetAxis("Horizontal");
+			//float moveZ = (Input.GetAxis("LS_v") != 0) ? -Input.GetAxis("LS_v") : -Input.GetAxis("Verical");
+			
+			float moveX = -Input.GetAxis("Horizontal");
 			float moveZ = -Input.GetAxis("Vertical");
 			
 			Vector3 movement    = new Vector3(moveX, 0.0f, moveZ);
@@ -61,7 +60,8 @@ public class avatarControls : MonoBehaviour
 			Vector3 newPosition = transform.position + movement * speed * Time.deltaTime;
 			Vector3 looking     = newPosition - transform.position;
 			
-			if ((movement != Vector3.zero) && !((Input.GetKey("space"))))
+			//if ((movement != Vector3.zero) && !((Input.GetKey("space"))))
+			if ((movement != Vector3.zero) && !((Input.GetButton("Strafe"))))
 			{
 				transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(looking), turnrate);
 			}				
@@ -116,13 +116,7 @@ public class avatarControls : MonoBehaviour
 		
 	void Update()
 	{
-		if (speedModifier != globalModifiers.GetComponent<globalModifiers>().playerSpeedModifier)
-		{
-			speedModifier = globalModifiers.GetComponent<globalModifiers>().playerSpeedModifier;
-			speed *= speedModifier;
-			stepsTime /= speedModifier;
-		}
-		
+
 		Vector3 eyesLevel = new Vector3(0, 3.4f, 0);
 		Vector3 hipLevel  = new Vector3(0, 2, 0);
     Debug.DrawRay(transform.position+eyesLevel, transform.forward*rayLength, Color.red);

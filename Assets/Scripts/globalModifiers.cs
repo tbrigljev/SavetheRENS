@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
-public class globalModifiers : MonoBehaviour
+
+public class globalModifiers : MonoBehaviourPun
 {
 	private GameObject objectTotalPoints;
 	private GameObject objectCurrentTime;
@@ -13,7 +15,9 @@ public class globalModifiers : MonoBehaviour
 	private GameObject backEndButton;
 	private GameObject pauseQuitButton;
 	private GameObject resumeButton;
+	private GameObject visitGameButton;
 	private GameObject pausedGame;
+	private GameObject[] players;
 	
 	private GameObject objectEndScreenTime;
 	private GameObject objectEndScreenPoints;
@@ -30,9 +34,9 @@ public class globalModifiers : MonoBehaviour
 	public int pointsTarget;
 	
 	private float gameTimer;
-	private int gameTime;
-	private int gameTimeSeconds;
-	private int gameTimeMinutes;
+	public int gameTime;
+	public int gameTimeSeconds;
+	public int gameTimeMinutes;
 	private int maxButtons;
 	private int minButtons;
 	private int quitButton;
@@ -56,6 +60,10 @@ public class globalModifiers : MonoBehaviour
 	public AudioClip musicEndScreen;
 	
 	private bool paused;
+	private bool up;
+	private bool down;
+	private bool left;
+	private bool right;
 	
   void Start()
   {
@@ -66,6 +74,10 @@ public class globalModifiers : MonoBehaviour
 		
 		paused = false;
 		gameOver = false;
+		up = false;
+		down = false;
+		left = false;
+		right = false;
 		
 		totalPoints = 0;
 		pointsTarget = 50;
@@ -99,7 +111,8 @@ public class globalModifiers : MonoBehaviour
 		
 		pauseQuitButton = GameObject.Find("ButtonPauseQuit");
 		resumeButton = GameObject.Find("ButtonResume");		
-		pausedGame = GameObject.Find("PausedGame");
+		pausedGame = GameObject.Find("PausedGame");		
+		visitGameButton = GameObject.Find("ButtonVisitGame");
 		
 		objectPauseMenu = GameObject.Find("PauseMenu");
 		objectPauseMenu.SetActive(false);
@@ -115,6 +128,13 @@ public class globalModifiers : MonoBehaviour
 
 	void Update()
 	{
+		
+		//left = (Input.GetAxis("Horizontal") < -0.8f) ? true : false;
+		//right = (Input.GetAxis("Horizontal") > 0.8f) ? true : false;
+		//up = (Input.GetAxis("Vertical") < -0.8f) ? true : false;
+		//down = (Input.GetAxis("Vertical") > 0.8f) ? true : false;
+		
+		
 		if (totalPoints > pointsTarget)
 		{
 			if (!gameOver)
@@ -124,128 +144,52 @@ public class globalModifiers : MonoBehaviour
 				backgroundMusic.Play();
 				
 				gameOver = true;
-				currentScreen = 2;
-				selectedButton = 3;
+				//currentScreen = 2;
+				//selectedButton = 3;
 				objectEndScreen.SetActive(true);
+				visitGameButton.gameObject.GetComponent<Button>().Select();
 				backEndButton.SetActive(true);
-
+				objectTotalPoints.SetActive(false); 
 				objectEndScreenTime.GetComponent<Text>().text = "Level completed in: " + textCurrentTime;
 				objectEndScreenPoints.GetComponent<Text>().text = "Total points: " + totalPoints;
 				objectEndScreenMissions.GetComponent<Text>().text = "Total missions: " + filedMissions;
 				
 				resumeButton.transform.Find("Text").gameObject.GetComponent<Text>().text = "Revisit room";
-				backEndButton.GetComponent<selectColorPauseMenu>().buttonIndex = 2;
-				pauseQuitButton.GetComponent<selectColorPauseMenu>().buttonIndex = 3;
+				//backEndButton.GetComponent<selectColorPauseMenu>().buttonIndex = 2;
+				//pauseQuitButton.GetComponent<selectColorPauseMenu>().buttonIndex = 3;
 				
 				gameOver = true;
 				selectedButton = 3;
 			}
 		}
 		
-		if (currentScreen == 0)
+		if (Input.GetButtonDown("Cancel"))
 		{
-			Time.timeScale = 1;
-			if (Input.GetKeyDown(KeyCode.Escape))
+			if (gameOver)
 			{
-				currentScreen = 1;
-				selectedButton = 1;
-				objectPauseMenu.SetActive(true);
-				if (gameOver)
-				{
-					pausedGame.SetActive(false);
-				}
-				selectedButton = 1;
-				paused = true;
-			}
-		}		
-		else if (currentScreen == 1)
-		{
-			Time.timeScale = 0;
-			maxButtons = (gameOver) ? 3 : 2;
-			
-			selectedButton += (Input.GetKeyDown(KeyCode.DownArrow)) ? 1          : 0;
-			selectedButton -= (Input.GetKeyDown(KeyCode.UpArrow))   ? 1          : 0;
-			selectedButton  = (selectedButton > maxButtons)         ? 1          : selectedButton;
-			selectedButton  = (selectedButton < 1)                  ? maxButtons : selectedButton;
-			
-			if (Input.GetKeyDown(KeyCode.Escape))
-			{
-				objectPauseMenu.SetActive(false);
-				currentScreen = 0;
-				paused = false;
-			}
-			
-			if (Input.GetKeyDown(KeyCode.Return))
-			{
-				Time.timeScale = 1;
-				
-				switch(selectedButton)
-				{
-					case 1:
-						currentScreen = 0;
-						objectPauseMenu.SetActive(false);
-						paused = false;
-						break;
-					case 2:
-						if (gameOver)
-						{
-							currentScreen = 2;
-							selectedButton = 3;
-							objectPauseMenu.SetActive(false);
-							objectEndScreen.SetActive(true);
-						}
-						else
-						{
-							SceneManager.LoadScene("MainMenu");
-						}
-						break;
-					case 3:
-						SceneManager.LoadScene("MainMenu");
-						break;
-					default:
-						Debug.Log("Nothing selected");
-						break;
-				}
-			}
-		}
-		else if (currentScreen == 2)
-		{
-			Time.timeScale = 0;
-			maxButtons = (gameOver) ? 4 : 3;
-			minButtons = (gameOver) ? 3 : 2;
-			
-			selectedButton -= (Input.GetKeyDown(KeyCode.RightArrow)) ? 1 : 0;
-			selectedButton += (Input.GetKeyDown(KeyCode.LeftArrow))  ? 1 : 0;
-			selectedButton  = (selectedButton > 3)                   ? 2 : selectedButton;
-			selectedButton  = (selectedButton < 2)                   ? 3 : selectedButton;
-			
-			if (Input.GetKeyDown(KeyCode.Escape))
-			{
-				currentScreen = 1;
-				selectedButton = 1;
 				objectEndScreen.SetActive(false);
-				objectPauseMenu.SetActive(true);				
-				pausedGame.SetActive(false);
-			}
-			
-			if (Input.GetKeyDown(KeyCode.Return))
-			{
-				Time.timeScale = 1;
-				switch(selectedButton)
+				
+				if (objectPauseMenu.activeSelf)
 				{
-					case 2:
-						SceneManager.LoadScene("MainMenu");
-						break;
-					case 3:
-						currentScreen = 0;
-						objectPauseMenu.SetActive(false);
-						objectEndScreen.SetActive(false);
-						break;
-					default:
-						Debug.Log("Nothing selected");
-						break;
+					Time.timeScale = 1;
+					objectPauseMenu.SetActive(false);					
+				}
+				else
+				{
+					Time.timeScale = 0;
+					objectPauseMenu.SetActive(true);
+					resumeButton.gameObject.GetComponent<Button>().Select();
 				}
 			}
+			
+			if (paused)
+			{
+				unpause();
+			}
+			else
+			{
+				pause();
+			};
 		}
 		
 		if (!paused && !gameOver)
@@ -258,19 +202,80 @@ public class globalModifiers : MonoBehaviour
 				gameTimer = 0f;
 				gameTime = 0;
 			}
-		
-			gameTimeMinutes = gameTime / 60;
-			gameTimeSeconds = gameTime - gameTimeMinutes*60;
+
+			if (PhotonNetwork.IsMasterClient)
+			{
+				gameTimeMinutes = gameTime / 60;
+				gameTimeSeconds = gameTime - gameTimeMinutes * 60;
+			}
 			textCurrentTime = gameTimeMinutes.ToString("00") + ":" + gameTimeSeconds.ToString("00");
 			objectCurrentTime.GetComponent<TextMesh>().text = "Time: " + textCurrentTime;
-		
-			if ((totalPoints + newPoints) > totalPoints)
+
+			/*if ((totalPoints + newPoints) > totalPoints)
 			{
 				totalPoints += newPoints;
 				textTotalPoints = "Points: " + totalPoints;
-				objectTotalPoints.GetComponent<TextMesh>().text = textTotalPoints;
+				
+				
 				newPoints = 0;
-			}
+				objectTotalPoints.GetComponent<TextMesh>().text = textTotalPoints;
+			}*/
+			textTotalPoints = "Points: " + totalPoints;
+			objectTotalPoints.GetComponent<TextMesh>().text = textTotalPoints;
+
+
 		}
 	}
+	
+	#region Public Methods
+	public void pause()
+	{
+		paused = true;
+		if (gameOver)
+		{
+			pausedGame.SetActive(false);
+		}
+		else
+		{
+			Time.timeScale = 0;
+		}
+		objectPauseMenu.SetActive(true);
+		resumeButton.gameObject.GetComponent<Button>().Select();
+	}
+	
+	public void unpause()
+	{
+		pauseQuitButton.gameObject.GetComponent<Button>().Select();
+		paused = false;
+		//print("Before is: " + Time.timeScale);
+		Time.timeScale = 1;
+		//print("After is: " + Time.timeScale);
+		objectPauseMenu.SetActive(false);
+	}
+	
+	public void backLevel()
+	{
+		objectPauseMenu.SetActive(false);
+		objectEndScreen.SetActive(false);
+		pausedGame.SetActive(false);
+	}
+	
+	public void endScreen()
+	{
+		objectPauseMenu.SetActive(false);
+		objectEndScreen.SetActive(true);
+		visitGameButton.gameObject.GetComponent<Button>().Select();
+	}
+	
+	public void quitToMainMenu()
+	{
+		Time.timeScale = 1;	
+		SceneManager.LoadScene("Launcher");
+		/*players = GameObject.FindGameObjectsWithTag("Player");
+		foreach (GameObject player in players)
+		{
+			Destroy(player);
+		}*/
+	}
+	#endregion
 }
